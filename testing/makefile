@@ -11,7 +11,7 @@ ASSERT_LEVEL := warning
 
 all: $(OUT)
 	ghdl -a $(GHDL_FLAGS) $(FILE).vhd
-	ghdl -e $(GHDL_FLAGS) $(FILE)
+	ghdl -e $(GHDL_FLAGS) -o $(FILE).out $(FILE)
 
 %.o : %.vhd
 	ghdl -a $(GHDL_FLAGS) $<
@@ -26,4 +26,4 @@ view:
 
 clean:
 	ghdl --clean 
-	rm -f *.cf *.vcd *.o *.ghw *.fst
+	rm -f *.cf *.vcd *.o *.ghw *.fst *.out
