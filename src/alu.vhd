@@ -80,6 +80,12 @@ begin
 				flags_out(HALF_CARRY_BIT) <= '1';
 				flags_out(SUBTRACT_BIT)    <= '1';
 			when alu_op_daa  =>
+				res := (others => '0');
+				res_slv := std_logic_vector(res);
+				
+				q <= res_slv(7 downto 0);
+				flags_out(ZERO_BIT)   <= nor_reduce(res_slv);
+				flags_out(HALF_CARRY_BIT) <= '0';
 
 			when alu_op_or   => 
 				q <= i0 or i1;
@@ -157,6 +163,14 @@ begin
 				flags_out(CARRY_BIT)      <= '0';
 				flags_out(SUBTRACT_BIT)   <= '0';
 				flags_out(HALF_CARRY_BIT) <= '0';
+				
+			when alu_op_set =>
+				q <= i0;
+				q(i1_int) <= '1';
+				
+			when alu_op_reset =>
+				q <= i0;
+				q(i1_int) <= '0';
 
 			when alu_op_xor  =>
 				res_slv(7 downto 0)       := i0 xor i1;

@@ -26,7 +26,7 @@ package types is
 						alu_op_daa,  alu_op_or,  alu_op_rl,
 						alu_op_rr,   alu_op_rrc, alu_op_sla,
 						alu_op_sra,  alu_op_srl, alu_op_sub,
-						alu_op_swap, alu_op_xor);
+						alu_op_swap, alu_op_set, alu_op_reset, alu_op_xor);
 
 	constant CARRY_BIT      : integer := 4;
 	constant HALF_CARRY_BIT : integer := 5;
