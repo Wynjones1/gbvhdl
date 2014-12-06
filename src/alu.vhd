@@ -166,11 +166,11 @@ begin
 				
 			when alu_op_set =>
 				q <= i0;
-				q(i1_int) <= '1';
+				q(to_integer(i1_int)) <= '1';
 				
 			when alu_op_reset =>
 				q <= i0;
-				q(i1_int) <= '0';
+				q(to_integer(i1_int)) <= '0';
 
 			when alu_op_xor  =>
 				res_slv(7 downto 0)       := i0 xor i1;
