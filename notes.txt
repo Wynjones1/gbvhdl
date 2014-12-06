@@ -1,0 +1,4 @@
+rlca resets the zero flag whilst rl does not.
+rrca  ,,
+rla   ,,
+rra   ,,

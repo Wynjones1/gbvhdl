@@ -24,8 +24,8 @@ package types is
 	type alu_op_t is (	alu_op_adc,   alu_op_add, alu_op_and,
 						alu_op_bit,  alu_op_cp,  alu_op_cpl,
 						alu_op_daa,  alu_op_or,  alu_op_rl,
-						alu_op_rr,   alu_op_rrc, alu_op_sla,
-						alu_op_sra,  alu_op_srl, alu_op_sub,
+						alu_op_rr,   alu_op_rrc, alu_op_sla,alu_op_rlc,
+						alu_op_sra,  alu_op_srl, alu_op_sub, alu_op_sbc,
 						alu_op_swap, alu_op_set, alu_op_reset, alu_op_xor);
 
 	constant CARRY_BIT      : integer := 4;

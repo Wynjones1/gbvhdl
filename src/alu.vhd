@@ -38,6 +38,7 @@ begin
 				flags_out(ZERO_BIT)  <= nor_reduce(res_slv(7 downto 0));
 				res(4 downto 0) := ('0' & i0_int(3 downto 0)) + i1_int(3 downto 0);
 				flags_out(HALF_CARRY_BIT) <= res(4);
+				flags_out(SUBTRACT_BIT)   <= '0';
 
 			when alu_op_adc =>
 				res     := (('0' & i0_int) + i1_int) + carry;
@@ -47,6 +48,7 @@ begin
 				flags_out(ZERO_BIT)  <= nor_reduce(res_slv(7 downto 0));
 				res(4 downto 0) := ('0' & i0_int(3 downto 0)) + i1_int(3 downto 0) + carry;
 				flags_out(HALF_CARRY_BIT) <= res(4);
+				flags_out(SUBTRACT_BIT)   <= '0';
 
 			when alu_op_and  =>
 				q <= i0 and i1;
@@ -55,12 +57,14 @@ begin
 				flags_out(CARRY_BIT)      <= '0';
 				flags_out(HALF_CARRY_BIT) <= '1';
 
-			when alu_op_bit  => -- bit test, no output at q
+			when alu_op_bit  =>
+				q <= (others => '0');
 				flags_out(ZERO_BIT)       <= not i0(to_integer(i1_int(2 downto 0)));
 				flags_out(SUBTRACT_BIT)   <= '0';
 				flags_out(HALF_CARRY_BIT) <= '1';
 
 			when alu_op_cp   => -- compare op, no output at q
+				q <= (others => '0');
 				if i0_int < i1_int then
 					flags_out(CARRY_BIT) <= '1';
 				else
@@ -78,7 +82,8 @@ begin
 			when alu_op_cpl  =>
 				q <= not i0;
 				flags_out(HALF_CARRY_BIT) <= '1';
-				flags_out(SUBTRACT_BIT)    <= '1';
+				flags_out(SUBTRACT_BIT)   <= '1';
+
 			when alu_op_daa  =>
 				res := (others => '0');
 				res_slv := std_logic_vector(res);
@@ -89,55 +94,62 @@ begin
 
 			when alu_op_or   => 
 				q <= i0 or i1;
-				flags_out(ZERO_BIT)       <= nor_reduce(i0 or i1);
-				flags_out(SUBTRACT_BIT)   <= '0';
 				flags_out(CARRY_BIT)      <= '0';
-				flags_out(HALF_CARRY_BIT) <= '1';
+				flags_out(HALF_CARRY_BIT) <= '0';
+				flags_out(SUBTRACT_BIT)   <= '0';
+				flags_out(ZERO_BIT)       <= nor_reduce(i0 or i1);
 
 			when alu_op_rl   =>
 				q <= i0(6 downto 0) & flags_in(CARRY_BIT);
 				flags_out(CARRY_BIT)      <= i0(7);
 				flags_out(HALF_CARRY_BIT) <= '0';
-				flags_out(ZERO_BIT)       <= flags_in(CARRY_BIT) nor nor_reduce(i0(6 downto 0));
 				flags_out(SUBTRACT_BIT)   <= '0';
+				flags_out(ZERO_BIT)       <= flags_in(CARRY_BIT) nor nor_reduce(i0(6 downto 0));
+
+			when alu_op_rlc  =>
+				q <= i0(6 downto 0) & i0(7);
+				flags_out(CARRY_BIT)      <= i0(7);
+				flags_out(HALF_CARRY_BIT) <= '0';
+				flags_out(SUBTRACT_BIT)   <= '0';
+				flags_out(ZERO_BIT)       <= nor_reduce(i0);
 
 			when alu_op_rr   =>
 				q <= flags_in(CARRY_BIT) & i0(7 downto 1);
 				flags_out(CARRY_BIT)      <= i0(0);
 				flags_out(HALF_CARRY_BIT) <= '0';
-				flags_out(ZERO_BIT)       <= flags_in(CARRY_BIT) nor nor_reduce(i0(7 downto 1));
 				flags_out(SUBTRACT_BIT)   <= '0';
+				flags_out(ZERO_BIT)       <= flags_in(CARRY_BIT) nor nor_reduce(i0(7 downto 1));
 
 			when alu_op_rrc  =>
 				q <= i0(0) & i0(7 downto 1);
 				flags_out(CARRY_BIT)      <= i0(0);
 				flags_out(HALF_CARRY_BIT) <= '0';
-				flags_out(ZERO_BIT)       <= nor_reduce(i0);
 				flags_out(SUBTRACT_BIT)   <= '0';
+				flags_out(ZERO_BIT)       <= nor_reduce(i0);
 
 			when alu_op_sla  =>
 				q <= i0(6 downto 0) & '0';
 				flags_out(CARRY_BIT)      <= i0(7);
 				flags_out(HALF_CARRY_BIT) <= '0';
-				flags_out(ZERO_BIT)       <= nor_reduce(i0(6 downto 0));
 				flags_out(SUBTRACT_BIT)   <= '0';
+				flags_out(ZERO_BIT)       <= nor_reduce(i0(6 downto 0));
 
 			when alu_op_sra  =>
 				q <= i0(7) & i0(7 downto 1);
 				flags_out(CARRY_BIT)      <= i0(0);
 				flags_out(HALF_CARRY_BIT) <= '0';
-				flags_out(ZERO_BIT)       <= nor_reduce(i0(7 downto 1));
 				flags_out(SUBTRACT_BIT)   <= '0';
+				flags_out(ZERO_BIT)       <= nor_reduce(i0(7 downto 1));
 
 			when alu_op_srl  =>
 				q <= '0' & i0(7 downto 1);
 				flags_out(CARRY_BIT)      <= i0(0);
 				flags_out(HALF_CARRY_BIT) <= '0';
-				flags_out(ZERO_BIT)       <= nor_reduce(i0(7 downto 1));
 				flags_out(SUBTRACT_BIT)   <= '0';
+				flags_out(ZERO_BIT)       <= nor_reduce(i0(7 downto 1));
 
 			when alu_op_sub  =>
-				res     := '0' & (i0_int - i1_int);
+				res(7 downto 0) := i0_int - i1_int;
 				res_slv := std_logic_vector(res);
 				q <= res_slv(7 downto 0);
 
@@ -156,6 +168,26 @@ begin
 				flags_out(ZERO_BIT)     <= nor_reduce(res_slv(7 downto 0));
 				flags_out(SUBTRACT_BIT) <= '1';
 
+			when alu_op_sbc =>
+				res(7 downto 0) := ((i0_int - i1_int) - carry);
+				res_slv := std_logic_vector(res);
+				q <= res_slv(7 downto 0);
+
+				if i0_int < (i1_int + carry) then
+					flags_out(CARRY_BIT) <= '1';
+				else
+					flags_out(CARRY_BIT) <= '0';
+				end if;
+
+				if i0_int(3 downto 0) < (i1_int(3 downto 0) + carry)  then
+					flags_out(HALF_CARRY_BIT) <= '1';
+				else
+					flags_out(HALF_CARRY_BIT) <= '0';
+				end if;
+
+				flags_out(ZERO_BIT)     <= nor_reduce(res_slv(7 downto 0));
+				flags_out(SUBTRACT_BIT) <= '1';
+
 			when alu_op_swap =>
 				q(3 downto 0) <= i0(7 downto 4);
 				q(7 downto 4) <= i0(3 downto 0);
@@ -166,18 +198,18 @@ begin
 				
 			when alu_op_set =>
 				q <= i0;
-				q(to_integer(i1_int)) <= '1';
+				q(to_integer(i1_int(2 downto 0))) <= '1';
 				
 			when alu_op_reset =>
 				q <= i0;
-				q(to_integer(i1_int)) <= '0';
+				q(to_integer(i1_int(2 downto 0))) <= '0';
 
 			when alu_op_xor  =>
-				res_slv(7 downto 0)       := i0 xor i1;
-				flags_out(ZERO_BIT)       <= nor_reduce(res_slv(7 downto 0));
-				flags_out(SUBTRACT_BIT)   <= '0';
+				q <= i0 xor i1;
 				flags_out(CARRY_BIT)      <= '0';
-				flags_out(HALF_CARRY_BIT) <= '1';
+				flags_out(HALF_CARRY_BIT) <= '0';
+				flags_out(SUBTRACT_BIT)   <= '0';
+				flags_out(ZERO_BIT)       <= nor_reduce(i0 xor i1);
 		end case;
 	end process;
 end rtl;
