@@ -1,3 +1,5 @@
 *.o
 *.cf
 *.out
+*.ghw
+*.vcd
