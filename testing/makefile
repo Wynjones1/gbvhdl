@@ -26,4 +26,4 @@ view:
 
 clean:
 	ghdl --clean 
-	rm -f *.cf *.vcd *.o *.ghw *.fst *.out
+	rm -f *.cf *.vcd *.o *.ghw *.fst *.out *.txt
