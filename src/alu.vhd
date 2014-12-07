@@ -13,8 +13,6 @@ entity alu is
 		  flags_out   : out reg_t);
 end entity;
 
--- report "res " & integer'image(res);
-
 architecture rtl of alu is
 begin
 	process(op, i0, i1, flags_in)
@@ -31,7 +29,7 @@ begin
 		flags_out <= flags_in;
 		case op is
 			when alu_op_add  =>
-				res     := ('0' & i0_int) + i1_int;
+				res     := ('0' & i0_int) + ('0' & i1_int);
 				res_slv := std_logic_vector(res);
 				q <= res_slv(7 downto 0);
 				flags_out(CARRY_BIT) <= res(8);
