@@ -32,4 +32,108 @@ package types is
     constant HALF_CARRY_BIT : integer := 5;
     constant SUBTRACT_BIT   : integer := 6;
     constant ZERO_BIT       : integer := 7;
+	 
+	 function alu_op_to_string( in_op : alu_op_t ) return string;
+     function string_to_alu_op( in_string : string) return alu_op_t;
 end;
+
+package body types is
+	 function alu_op_to_string( in_op : alu_op_t ) return string is
+	 begin
+		case in_op is
+            when alu_op_adc   => 
+                return "alu_op_adc";
+            when alu_op_add   => 
+                return "alu_op_add";
+            when alu_op_and   => 
+                return "alu_op_and";
+            when alu_op_bit   => 
+                return "alu_op_bit";
+            when alu_op_cp    => 
+                return "alu_op_cp";
+            when alu_op_cpl   => 
+                return "alu_op_cpl";
+            when alu_op_daa   => 
+                return "alu_op_daa";
+            when alu_op_or    => 
+                return "alu_op_or";
+            when alu_op_rl    => 
+                return "alu_op_rl";
+            when alu_op_rr    => 
+                return "alu_op_rr";
+            when alu_op_rrc   => 
+                return "alu_op_rrc";
+            when alu_op_sla   => 
+                return "alu_op_sla";
+            when alu_op_rlc   => 
+                return "alu_op_rlc";
+            when alu_op_sra   => 
+                return "alu_op_sra";
+            when alu_op_srl   => 
+                return "alu_op_srl";
+            when alu_op_sub   => 
+                return "alu_op_sub";
+            when alu_op_sbc   => 
+                return "alu_op_sbc";
+            when alu_op_swap  => 
+                return "alu_op_swap";
+            when alu_op_set   => 
+                return "alu_op_set";
+            when alu_op_reset => 
+                return "alu_op_reset";
+            when alu_op_xor   =>
+                return "alu_op_xor";
+        end case;
+	 end alu_op_to_string;
+
+	 function string_to_alu_op( in_string : string) return alu_op_t is
+	 begin
+		case in_string is
+            when "alu_op_adc" =>
+                return alu_op_adc; 
+            when "alu_op_add" =>
+                return alu_op_add; 
+            when "alu_op_and" =>
+                return alu_op_and; 
+            when "alu_op_bit" =>
+                return alu_op_bit; 
+            when "alu_op_cpl" =>
+                return alu_op_cpl; 
+            when "alu_op_cp" =>
+                return alu_op_cp; 
+            when "alu_op_daa" =>
+                return alu_op_daa; 
+            when "alu_op_or" =>
+                return alu_op_or; 
+            when "alu_op_rrc" =>
+                return alu_op_rrc; 
+            when "alu_op_rr" =>
+                return alu_op_rr; 
+            when "alu_op_sla" =>
+                return alu_op_sla; 
+            when "alu_op_rlc" =>
+                return alu_op_rlc; 
+            when "alu_op_rl" =>
+                return alu_op_rl; 
+            when "alu_op_sra" =>
+                return alu_op_sra; 
+            when "alu_op_srl" =>
+                return alu_op_srl; 
+            when "alu_op_sub" =>
+                return alu_op_sub; 
+            when "alu_op_sbc" =>
+                return alu_op_sbc; 
+            when "alu_op_swap" =>
+                return alu_op_swap; 
+            when "alu_op_set" =>
+                return alu_op_set; 
+            when "alu_op_reset" =>
+                return alu_op_reset; 
+            when "alu_op_xor" =>
+                return alu_op_xor;
+            when others =>
+                report "Error invalid alu op" severity failure;
+                return alu_op_xor;
+        end case;
+	 end string_to_alu_op;
+end types;

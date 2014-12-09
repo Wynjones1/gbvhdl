@@ -50,7 +50,6 @@ architecture rtl of alu_tb is
     signal q         : reg_t := (others => '0');
     signal flags_in  : reg_t := (others => '0');
     signal flags_out : reg_t := (others => '0');
-    file   log : text open write_mode is "out.txt";
 begin
     alu0: alu
         port map (op, i0, i1, q, flags_in, flags_out);
@@ -63,26 +62,38 @@ begin
         clk <= '1';
         wait for 10 ns;
     end process;
-
+	 
     gen_data:
-    process(clk)
-        type state_t is (state_0, state_1);
-        variable state : state_t := state_0;
+    process
+        type state_t is (state_read_op, state_load_input, state_read_output);
+        variable state    : state_t := state_read_op;
+		  file log          : text open read_mode is "/home/stuart/VHDL/gbvhdl/testing/input.txt";
+		  file outfile      : text;
+		  variable tmp_line : line;
     begin
-        if rising_edge(clk) then
-            case state is
-                when state_0 =>
-                    op    <= alu_op_adc;
-                    state := state_1;
-                when state_1 =>
-                    state := state_0;
-                    output_data("alu_op_adc", i0, i1, q, flags_in, flags_out, log);
-                    input <= std_logic_vector( unsigned(input) + 1);
-                    if and_reduce(input) = '1' then
-                        report "End of simulation" severity failure;
-                    end if;
-            end case;
-        end if;
+        case state is
+            when state_read_op =>
+					if endfile(log) then
+						report "End of simulation." severity failure;
+					end if;
+					readline(log, tmp_line);
+					file_open(outfile, "/home/stuart/VHDL/gbvhdl/testing/output/" & tmp_line.all & ".txt", WRITE_MODE);
+					op    <= string_to_alu_op(tmp_line.all);
+					state := state_load_input;
+					wait for 10ns;
+            when state_load_input =>
+               state := state_read_output;
+               wait for 10 ns;
+				when state_read_output =>
+               state := state_load_input;
+               output_data(tmp_line.all, i0, i1, q, flags_in, flags_out, outfile);
+               input <= std_logic_vector( unsigned(input) + 1);
+               if and_reduce(input) = '1' then
+						state := state_read_op;
+						file_close(outfile);
+               end if;
+               wait for 10 ns;
+        end case;
     end process;
 
     i0 <= input( 7 downto 0);
