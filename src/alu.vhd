@@ -102,7 +102,7 @@ begin
                 flags_out(CARRY_BIT)      <= i0(7);
                 flags_out(HALF_CARRY_BIT) <= '0';
                 flags_out(SUBTRACT_BIT)   <= '0';
-                flags_out(ZERO_BIT)       <= flags_in(CARRY_BIT) nor nor_reduce(i0(6 downto 0));
+                flags_out(ZERO_BIT)       <= nor_reduce(i0(6 downto 0) & flags_in(CARRY_BIT));
 
             when alu_op_rlc  =>
                 q <= i0(6 downto 0) & i0(7);
@@ -116,7 +116,7 @@ begin
                 flags_out(CARRY_BIT)      <= i0(0);
                 flags_out(HALF_CARRY_BIT) <= '0';
                 flags_out(SUBTRACT_BIT)   <= '0';
-                flags_out(ZERO_BIT)       <= flags_in(CARRY_BIT) nor nor_reduce(i0(7 downto 1));
+                flags_out(ZERO_BIT)       <= nor_reduce(flags_in(CARRY_BIT) & i0(7 downto 1));
 
             when alu_op_rrc  =>
                 q <= i0(0) & i0(7 downto 1);
@@ -177,22 +177,22 @@ begin
                     flags_out(CARRY_BIT) <= '0';
                 end if;
 
-                if i0_int(3 downto 0) < (i1_int(3 downto 0) + carry)  then
+                if i0_int(3 downto 0) < (('0' & i1_int(3 downto 0)) + carry)  then
                     flags_out(HALF_CARRY_BIT) <= '1';
                 else
                     flags_out(HALF_CARRY_BIT) <= '0';
                 end if;
 
-                flags_out(ZERO_BIT)     <= nor_reduce(res_slv(7 downto 0));
                 flags_out(SUBTRACT_BIT) <= '1';
+                flags_out(ZERO_BIT)     <= nor_reduce(res_slv(7 downto 0));
 
             when alu_op_swap =>
                 q(3 downto 0) <= i0(7 downto 4);
                 q(7 downto 4) <= i0(3 downto 0);
-                flags_out(ZERO_BIT)       <= nor_reduce(i0);
                 flags_out(CARRY_BIT)      <= '0';
-                flags_out(SUBTRACT_BIT)   <= '0';
                 flags_out(HALF_CARRY_BIT) <= '0';
+                flags_out(SUBTRACT_BIT)   <= '0';
+                flags_out(ZERO_BIT)       <= nor_reduce(i0);
                 
             when alu_op_set =>
                 q <= i0;

@@ -1,5 +1,6 @@
 #!/usr/bin/env python2.7
 import sys
+import os
 from ops    import *
 from common import *
 
@@ -27,15 +28,13 @@ def test_data(file0, file1):
         line0 = fp0.readline()
         line1 = fp1.readline()
         lineno  += 1
-        if lineno % 100000 == 0:
-            print("Processing line %s" % lineno)
         if line0 != line1:
             if line0 == "" or line1 == "":
                 print("Files different size")
                 return
-            print("Lines differ at line %d" % lineno)
-            print("%s : %s" % (file0.ljust(max(len(file0), len(file1))),line0))
-            print("%s : %s" % (file1.ljust(max(len(file0), len(file1))),line1))
+        #    print("Lines differ at line %d" % lineno)
+            sys.stdout.write("%s : %s" % (file0.ljust(max(len(file0), len(file1))),line0))
+            sys.stdout.write("%s : %s" % (file1.ljust(max(len(file0), len(file1))),line1))
             return
         if not line0:
             return
@@ -49,7 +48,8 @@ def main():
     for op in ops:
         with open("alu/%s.txt" % op.__name__, "w") as fp:
             get_result(fp, op)
-    #test_data("../out.txt", "alu/add.txt")
+    for i in os.listdir("alu"):
+        test_data("../output/%s" % i, "alu/%s" % i)
 
 if __name__ == "__main__":
     main()
