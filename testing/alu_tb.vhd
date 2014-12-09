@@ -62,35 +62,35 @@ begin
         clk <= '1';
         wait for 10 ns;
     end process;
-	 
+     
     gen_data:
     process
         type state_t is (state_read_op, state_load_input, state_read_output);
         variable state    : state_t := state_read_op;
-		  file log          : text open read_mode is "/home/stuart/VHDL/gbvhdl/testing/input.txt";
-		  file outfile      : text;
-		  variable tmp_line : line;
+          file log          : text open read_mode is "/home/stuart/VHDL/gbvhdl/testing/input.txt";
+          file outfile      : text;
+          variable tmp_line : line;
     begin
         case state is
             when state_read_op =>
-					if endfile(log) then
-						report "End of simulation." severity failure;
-					end if;
-					readline(log, tmp_line);
-					file_open(outfile, "/home/stuart/VHDL/gbvhdl/testing/output/" & tmp_line.all & ".txt", WRITE_MODE);
-					op    <= string_to_alu_op(tmp_line.all);
-					state := state_load_input;
-					wait for 10ns;
+                    if endfile(log) then
+                        report "End of simulation." severity failure;
+                    end if;
+                    readline(log, tmp_line);
+                    file_open(outfile, "/home/stuart/VHDL/gbvhdl/testing/output/" & tmp_line.all & ".txt", WRITE_MODE);
+                    op    <= string_to_alu_op(tmp_line.all);
+                    state := state_load_input;
+                    wait for 10ns;
             when state_load_input =>
                state := state_read_output;
                wait for 10 ns;
-				when state_read_output =>
+                when state_read_output =>
                state := state_load_input;
                output_data(tmp_line.all, i0, i1, q, flags_in, flags_out, outfile);
                input <= std_logic_vector( unsigned(input) + 1);
                if and_reduce(input) = '1' then
-						state := state_read_op;
-						file_close(outfile);
+                        state := state_read_op;
+                        file_close(outfile);
                end if;
                wait for 10 ns;
         end case;
