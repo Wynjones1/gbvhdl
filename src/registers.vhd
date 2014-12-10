@@ -52,7 +52,7 @@ begin
         end if;
     end process;
 
-    output : process(reg_sel)
+    output : process(reg_sel, af, bc, de, hl)
     begin
         read_data <= (others => '0');
         case reg_sel is
