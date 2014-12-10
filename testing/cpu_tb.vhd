@@ -12,7 +12,7 @@ architecture rtl of cpu_tb is
         port(clk        : in  std_logic;
              reset      : in  std_logic;
              read_data  : in  byte_t;
-             addr       : out reg16_t;
+             addr       : out word_t;
              we         : out std_logic;
              write_data : out byte_t);
     end component;
@@ -20,7 +20,7 @@ architecture rtl of cpu_tb is
     signal clk        : std_logic;
     signal reset      : std_logic;
     signal read_data  : byte_t;
-    signal addr       : reg16_t;
+    signal addr       : word_t;
     signal we         : std_logic;
     signal write_data : byte_t;
 begin

@@ -6,8 +6,8 @@ use work.types.all;
 entity registers is
     port( clk        : in std_logic;
           reset      : in std_logic;
-          write_data : in reg16_t;
-          read_data  : in reg16_t;
+          write_data : in word_t;
+          read_data  : in word_t;
           we         : in std_logic;
 end entity;
 

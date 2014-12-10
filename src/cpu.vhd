@@ -7,7 +7,7 @@ entity cpu is
     port(clk        : in  std_logic;
          reset      : in  std_logic;
          read_data  : in  byte_t;
-         addr       : out reg16_t;
+         addr       : out word_t;
          we         : out std_logic;
          write_data : out byte_t);
 end entity;
@@ -24,7 +24,7 @@ architecture rtl of cpu is
 
 
     signal a, f, b, c, d, e, h, l  : byte_t;
-    signal af, bc, de, hl, sp, pc  : reg16_t;
+    signal af, bc, de, hl, sp, pc  : word_t;
     type state_t is (state_load_instr, state_decode_instr, state_execute_instr);
     signal state : state_t;
 begin
