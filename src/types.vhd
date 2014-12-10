@@ -2,10 +2,26 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 
 package types is
-    subtype reg_t    is std_logic_vector( 7 downto 0);
-    subtype reg16_t  is std_logic_vector(15 downto 0);
-    subtype op_t     is std_logic_vector( 5 downto 0);
-    subtype alu_op_t is std_logic_vector( 4 downto 0);
+    subtype byte_t     is std_logic_vector( 7 downto 0);
+    subtype word_t     is std_logic_vector(15 downto 0);
+    subtype op_t       is std_logic_vector( 5 downto 0);
+    subtype alu_op_t   is std_logic_vector( 4 downto 0);
+    subtype register_t is std_logic_vector( 3 downto 0);
+
+    constant register_a  : register_t := "0000";
+    constant register_b  : register_t := "0001";
+    constant register_c  : register_t := "0010";
+    constant register_d  : register_t := "0011";
+    constant register_e  : register_t := "0100";
+    constant register_f  : register_t := "0101";
+    constant register_h  : register_t := "0110";
+    constant register_l  : register_t := "0111";
+    constant register_af : register_t := "1000";
+    constant register_bc : register_t := "1001";
+    constant register_de : register_t := "1010";
+    constant register_hl : register_t := "1011";
+    constant register_sp : register_t := "1100";
+    constant register_pc : register_t := "1101";
 
     constant op_add    : op_t := "000000";
     constant op_and    : op_t := "000001";

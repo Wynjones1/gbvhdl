@@ -25,6 +25,8 @@ architecture rtl of cpu is
 
     signal a, f, b, c, d, e, h, l  : reg_t;
     signal af, bc, de, hl, sp, pc  : reg16_t;
+    type state_t is (state_load_instr, state_decode_instr, state_execute_instr);
+    signal state : state_t;
 begin
     datapath_proc:
     process(clk, reset)
@@ -46,17 +48,14 @@ begin
 
     control_proc:
     process(clk, reset)
-        type state_t is (state_idle, state_read_instr, state_decode_instr);
-        variable state : state_t;
     begin
         if reset = '1' then
+            state <= state_load_instr;
         elsif rising_edge(clk) then
             case state is
-                when state_idle         =>
-                when state_read_instr   =>
-                    addr  <= pc;
-                    state := state_decode_instr;
-                when state_decode_instr =>
+                when state_load_instr    =>
+                when state_decode_instr  =>
+                when state_execute_instr =>
             end case;
         end if;
     end process;
