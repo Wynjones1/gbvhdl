@@ -7,6 +7,8 @@ package types is
     subtype op_t       is std_logic_vector( 5 downto 0);
     subtype alu_op_t   is std_logic_vector( 4 downto 0);
     subtype register_t is std_logic_vector( 3 downto 0);
+    subtype HI_BYTE    is natural range 15 downto 8;
+    subtype LO_BYTE    is natural range  7 downto 0;
 
     constant register_a  : register_t := "0000";
     constant register_b  : register_t := "0001";

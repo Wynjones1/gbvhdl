@@ -22,9 +22,6 @@ architecture rtl of cpu is
               flags_out   : out byte_t);
     end component;
 
-
-    signal a, f, b, c, d, e, h, l  : byte_t;
-    signal af, bc, de, hl, sp, pc  : word_t;
     type state_t is (state_load_instr, state_decode_instr, state_execute_instr);
     signal state : state_t;
 begin
@@ -32,16 +29,6 @@ begin
     process(clk, reset)
     begin
         if reset = '1' then
-            a  <= (others => '0');
-            f  <= (others => '0');
-            b  <= (others => '0');
-            c  <= (others => '0');
-            d  <= (others => '0');
-            e  <= (others => '0');
-            h  <= (others => '0');
-            l  <= (others => '0');
-            sp <= (others => '0');
-            pc <= (others => '0');
         elsif rising_edge(clk) then
         end if;
     end process;
@@ -59,9 +46,4 @@ begin
             end case;
         end if;
     end process;
-
-    af <= a & f;
-    bc <= b & c;
-    de <= d & e;
-    hl <= h & l;
 end architecture;
