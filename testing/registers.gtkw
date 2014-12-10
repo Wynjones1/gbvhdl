@@ -1,0 +1,36 @@
+[*]
+[*] GTKWave Analyzer v3.3.58 (w)1999-2014 BSI
+[*] Wed Dec 10 21:47:48 2014
+[*]
+[dumpfile] "/home/stuart/VHDL/gbvhdl/testing/waves.ghw"
+[dumpfile_mtime] "Wed Dec 10 21:44:21 2014"
+[dumpfile_size] 14070519
+[savefile] "/home/stuart/VHDL/gbvhdl/testing/registers.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -4 3
+*-26.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.registers_tb.
+[treeopen] top.registers_tb.registers_0.
+[sst_width] 202
+[signals_width] 158
+[sst_expanded] 1
+[sst_vpaned_height] 152
+@28
+top.registers_tb.registers_0.clk
+top.registers_tb.registers_0.reset
+top.registers_tb.registers_0.we
+@22
+#{top.registers_tb.reg_sel[3:0]} top.registers_tb.reg_sel[3] top.registers_tb.reg_sel[2] top.registers_tb.reg_sel[1] top.registers_tb.reg_sel[0]
+#{top.registers_tb.read_data[15:0]} top.registers_tb.read_data[15] top.registers_tb.read_data[14] top.registers_tb.read_data[13] top.registers_tb.read_data[12] top.registers_tb.read_data[11] top.registers_tb.read_data[10] top.registers_tb.read_data[9] top.registers_tb.read_data[8] top.registers_tb.read_data[7] top.registers_tb.read_data[6] top.registers_tb.read_data[5] top.registers_tb.read_data[4] top.registers_tb.read_data[3] top.registers_tb.read_data[2] top.registers_tb.read_data[1] top.registers_tb.read_data[0]
+#{top.registers_tb.write_data[15:0]} top.registers_tb.write_data[15] top.registers_tb.write_data[14] top.registers_tb.write_data[13] top.registers_tb.write_data[12] top.registers_tb.write_data[11] top.registers_tb.write_data[10] top.registers_tb.write_data[9] top.registers_tb.write_data[8] top.registers_tb.write_data[7] top.registers_tb.write_data[6] top.registers_tb.write_data[5] top.registers_tb.write_data[4] top.registers_tb.write_data[3] top.registers_tb.write_data[2] top.registers_tb.write_data[1] top.registers_tb.write_data[0]
+#{top.registers_tb.registers_0.af[15:0]} top.registers_tb.registers_0.af[15] top.registers_tb.registers_0.af[14] top.registers_tb.registers_0.af[13] top.registers_tb.registers_0.af[12] top.registers_tb.registers_0.af[11] top.registers_tb.registers_0.af[10] top.registers_tb.registers_0.af[9] top.registers_tb.registers_0.af[8] top.registers_tb.registers_0.af[7] top.registers_tb.registers_0.af[6] top.registers_tb.registers_0.af[5] top.registers_tb.registers_0.af[4] top.registers_tb.registers_0.af[3] top.registers_tb.registers_0.af[2] top.registers_tb.registers_0.af[1] top.registers_tb.registers_0.af[0]
+#{top.registers_tb.registers_0.bc[15:0]} top.registers_tb.registers_0.bc[15] top.registers_tb.registers_0.bc[14] top.registers_tb.registers_0.bc[13] top.registers_tb.registers_0.bc[12] top.registers_tb.registers_0.bc[11] top.registers_tb.registers_0.bc[10] top.registers_tb.registers_0.bc[9] top.registers_tb.registers_0.bc[8] top.registers_tb.registers_0.bc[7] top.registers_tb.registers_0.bc[6] top.registers_tb.registers_0.bc[5] top.registers_tb.registers_0.bc[4] top.registers_tb.registers_0.bc[3] top.registers_tb.registers_0.bc[2] top.registers_tb.registers_0.bc[1] top.registers_tb.registers_0.bc[0]
+#{top.registers_tb.registers_0.de[15:0]} top.registers_tb.registers_0.de[15] top.registers_tb.registers_0.de[14] top.registers_tb.registers_0.de[13] top.registers_tb.registers_0.de[12] top.registers_tb.registers_0.de[11] top.registers_tb.registers_0.de[10] top.registers_tb.registers_0.de[9] top.registers_tb.registers_0.de[8] top.registers_tb.registers_0.de[7] top.registers_tb.registers_0.de[6] top.registers_tb.registers_0.de[5] top.registers_tb.registers_0.de[4] top.registers_tb.registers_0.de[3] top.registers_tb.registers_0.de[2] top.registers_tb.registers_0.de[1] top.registers_tb.registers_0.de[0]
+#{top.registers_tb.registers_0.hl[15:0]} top.registers_tb.registers_0.hl[15] top.registers_tb.registers_0.hl[14] top.registers_tb.registers_0.hl[13] top.registers_tb.registers_0.hl[12] top.registers_tb.registers_0.hl[11] top.registers_tb.registers_0.hl[10] top.registers_tb.registers_0.hl[9] top.registers_tb.registers_0.hl[8] top.registers_tb.registers_0.hl[7] top.registers_tb.registers_0.hl[6] top.registers_tb.registers_0.hl[5] top.registers_tb.registers_0.hl[4] top.registers_tb.registers_0.hl[3] top.registers_tb.registers_0.hl[2] top.registers_tb.registers_0.hl[1] top.registers_tb.registers_0.hl[0]
+#{top.registers_tb.registers_0.sp[15:0]} top.registers_tb.registers_0.sp[15] top.registers_tb.registers_0.sp[14] top.registers_tb.registers_0.sp[13] top.registers_tb.registers_0.sp[12] top.registers_tb.registers_0.sp[11] top.registers_tb.registers_0.sp[10] top.registers_tb.registers_0.sp[9] top.registers_tb.registers_0.sp[8] top.registers_tb.registers_0.sp[7] top.registers_tb.registers_0.sp[6] top.registers_tb.registers_0.sp[5] top.registers_tb.registers_0.sp[4] top.registers_tb.registers_0.sp[3] top.registers_tb.registers_0.sp[2] top.registers_tb.registers_0.sp[1] top.registers_tb.registers_0.sp[0]
+@23
+#{top.registers_tb.registers_0.pc[15:0]} top.registers_tb.registers_0.pc[15] top.registers_tb.registers_0.pc[14] top.registers_tb.registers_0.pc[13] top.registers_tb.registers_0.pc[12] top.registers_tb.registers_0.pc[11] top.registers_tb.registers_0.pc[10] top.registers_tb.registers_0.pc[9] top.registers_tb.registers_0.pc[8] top.registers_tb.registers_0.pc[7] top.registers_tb.registers_0.pc[6] top.registers_tb.registers_0.pc[5] top.registers_tb.registers_0.pc[4] top.registers_tb.registers_0.pc[3] top.registers_tb.registers_0.pc[2] top.registers_tb.registers_0.pc[1] top.registers_tb.registers_0.pc[0]
+[pattern_trace] 1
+[pattern_trace] 0
