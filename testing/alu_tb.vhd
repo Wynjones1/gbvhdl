@@ -12,11 +12,11 @@ end;
 architecture rtl of alu_tb is
     component alu is
         port( op          : in  alu_op_t;
-              i0          : in  reg_t;
-              i1          : in  reg_t;
-              q           : out reg_t;
-              flags_in    : in  reg_t;
-              flags_out   : out reg_t);
+              i0          : in  byte_t;
+              i1          : in  byte_t;
+              q           : out byte_t;
+              flags_in    : in  byte_t;
+              flags_out   : out byte_t);
     end component;
 
     procedure output_data(name             : string;
@@ -45,11 +45,11 @@ architecture rtl of alu_tb is
     signal clk       : std_logic;
     signal op        : alu_op_t;
     signal input     : std_logic_vector((8 + 8 + 4) - 1 downto 0) := (others => '0');
-    signal i0        : reg_t := (others => '0');
-    signal i1        : reg_t := (others => '0');
-    signal q         : reg_t := (others => '0');
-    signal flags_in  : reg_t := (others => '0');
-    signal flags_out : reg_t := (others => '0');
+    signal i0        : byte_t := (others => '0');
+    signal i1        : byte_t := (others => '0');
+    signal q         : byte_t := (others => '0');
+    signal flags_in  : byte_t := (others => '0');
+    signal flags_out : byte_t := (others => '0');
 begin
     alu0: alu
         port map (op, i0, i1, q, flags_in, flags_out);

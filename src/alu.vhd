@@ -6,11 +6,11 @@ use work.types.all;
 
 entity alu is
     port( op          : in  alu_op_t;
-          i0          : in  reg_t;
-          i1          : in  reg_t;
-          q           : out reg_t;
-          flags_in    : in  reg_t;
-          flags_out   : out reg_t);
+          i0          : in  byte_t;
+          i1          : in  byte_t;
+          q           : out byte_t;
+          flags_in    : in  byte_t;
+          flags_out   : out byte_t);
 end entity;
 
 architecture rtl of alu is

@@ -6,24 +6,24 @@ use work.types.all;
 entity cpu is
     port(clk        : in  std_logic;
          reset      : in  std_logic;
-         read_data  : in  reg_t;
+         read_data  : in  byte_t;
          addr       : out reg16_t;
          we         : out std_logic;
-         write_data : out reg_t);
+         write_data : out byte_t);
 end entity;
 
 architecture rtl of cpu is
     component alu is
         port( op          : in  alu_op_t;
-              i0          : in  reg_t;
-              i1          : in  reg_t;
-              q           : out reg_t;
-              flags_in    : in  reg_t;
-              flags_out   : out reg_t);
+              i0          : in  byte_t;
+              i1          : in  byte_t;
+              q           : out byte_t;
+              flags_in    : in  byte_t;
+              flags_out   : out byte_t);
     end component;
 
 
-    signal a, f, b, c, d, e, h, l  : reg_t;
+    signal a, f, b, c, d, e, h, l  : byte_t;
     signal af, bc, de, hl, sp, pc  : reg16_t;
     type state_t is (state_load_instr, state_decode_instr, state_execute_instr);
     signal state : state_t;
