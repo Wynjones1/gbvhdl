@@ -208,6 +208,8 @@ begin
                 flags_out(HALF_CARRY_BIT) <= '0';
                 flags_out(SUBTRACT_BIT)   <= '0';
                 flags_out(ZERO_BIT)       <= nor_reduce(i0 xor i1);
+            when others =>
+                q <= (others => '0');
         end case;
     end process;
 end rtl;

@@ -3,6 +3,7 @@ SRC          := $(shell find $(SRCDIR) -type f -name "*.vhd")
 OUT          := $(patsubst  %.vhd,%.o,$(SRC))
 FILE         := memory_tb
 FILE         := alu_tb
+FILE         := cpu_tb
 WAVE         := --vcd=waves.vcd
 WAVE         := --wave=waves.ghw
 #TIME         := --stop-time=4ms
