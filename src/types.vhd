@@ -98,56 +98,87 @@ package types is
     constant ZERO_BIT       : integer := 7;
 	 
 	function alu_op_to_string( in_op : alu_op_t ) return string;
+    function op_to_string( in_op : op_t ) return string;
 end;
 
 package body types is
 	 function alu_op_to_string( in_op : alu_op_t ) return string is
 	 begin
 		case in_op is
-            when alu_op_adc   => 
-                return "alu_op_adc";
-            when alu_op_add   => 
-                return "alu_op_add";
-            when alu_op_and   => 
-                return "alu_op_and";
-            when alu_op_bit   => 
-                return "alu_op_bit";
-            when alu_op_cp    => 
-                return "alu_op_cp";
-            when alu_op_cpl   => 
-                return "alu_op_cpl";
-            when alu_op_daa   => 
-                return "alu_op_daa";
-            when alu_op_or    => 
-                return "alu_op_or";
-            when alu_op_rl    => 
-                return "alu_op_rl";
-            when alu_op_rr    => 
-                return "alu_op_rr";
-            when alu_op_rrc   => 
-                return "alu_op_rrc";
-            when alu_op_sla   => 
-                return "alu_op_sla";
-            when alu_op_rlc   => 
-                return "alu_op_rlc";
-            when alu_op_sra   => 
-                return "alu_op_sra";
-            when alu_op_srl   => 
-                return "alu_op_srl";
-            when alu_op_sub   => 
-                return "alu_op_sub";
-            when alu_op_sbc   => 
-                return "alu_op_sbc";
-            when alu_op_swap  => 
-                return "alu_op_swap";
-            when alu_op_set   => 
-                return "alu_op_set";
-            when alu_op_reset => 
-                return "alu_op_reset";
-            when alu_op_xor   =>
-                return "alu_op_xor";
-            when others =>
-                return "INVALID";
+            when alu_op_adc   => return "alu_op_adc";
+            when alu_op_add   => return "alu_op_add";
+            when alu_op_and   => return "alu_op_and";
+            when alu_op_bit   => return "alu_op_bit";
+            when alu_op_cp    => return "alu_op_cp";
+            when alu_op_cpl   => return "alu_op_cpl";
+            when alu_op_daa   => return "alu_op_daa";
+            when alu_op_or    => return "alu_op_or";
+            when alu_op_rl    => return "alu_op_rl";
+            when alu_op_rr    => return "alu_op_rr";
+            when alu_op_rrc   => return "alu_op_rrc";
+            when alu_op_sla   => return "alu_op_sla";
+            when alu_op_rlc   => return "alu_op_rlc";
+            when alu_op_sra   => return "alu_op_sra";
+            when alu_op_srl   => return "alu_op_srl";
+            when alu_op_sub   => return "alu_op_sub";
+            when alu_op_sbc   => return "alu_op_sbc";
+            when alu_op_swap  => return "alu_op_swap";
+            when alu_op_set   => return "alu_op_set";
+            when alu_op_reset => return "alu_op_reset";
+            when alu_op_xor   => return "alu_op_xor";
+            when others       => return "INVALID";
         end case;
 	 end alu_op_to_string;
+
+     function op_to_string( in_op : op_t ) return string is
+     begin
+        case in_op is
+            when op_add    => return "op_add";
+            when op_and    => return "op_and";
+            when op_bit    => return "op_bit";
+            when op_call   => return "op_call";
+            when op_ccf    => return "op_ccf";
+            when op_cp     => return "op_cp";
+            when op_cpl    => return "op_cpl";
+            when op_daa    => return "op_daa";
+            when op_dec    => return "op_dec";
+            when op_di     => return "op_di";
+            when op_ei     => return "op_ei";
+            when op_halt   => return "op_halt";
+            when op_inc    => return "op_inc";
+            when op_jp     => return "op_jp";
+            when op_jr     => return "op_jr";
+            when op_ld     => return "op_ld";
+            when op_lhd    => return "op_lhd";
+            when op_nop    => return "op_nop";
+            when op_or     => return "op_or";
+            when op_pop    => return "op_pop";
+            when op_prefix => return "op_prefix";
+            when op_push   => return "op_push";
+            when op_res    => return "op_res";
+            when op_ret    => return "op_ret";
+            when op_reti   => return "op_reti";
+            when op_rla    => return "op_rla";
+            when op_rl     => return "op_rl";
+            when op_rlca   => return "op_rlca";
+            when op_rlc    => return "op_rlc";
+            when op_rra    => return "op_rra";
+            when op_rr     => return "op_rr";
+            when op_rrca   => return "op_rrca";
+            when op_rrc    => return "op_rrc";
+            when op_rst    => return "op_rst";
+            when op_sbc    => return "op_sbc";
+            when op_scf    => return "op_scf";
+            when op_set    => return "op_set";
+            when op_sla    => return "op_sla";
+            when op_sra    => return "op_sra";
+            when op_srl    => return "op_srl";
+            when op_stop   => return "op_stop";
+            when op_sub    => return "op_sub";
+            when op_swap   => return "op_swap";
+            when op_xor    => return "op_xor";
+            when others    => return "INVALID";
+        end case;
+     end op_to_string;
+
 end types;

@@ -17,12 +17,12 @@ architecture rtl of registers_tb is
               reg_sel    : in  register_t);
     end component;
 
-    signal clk        :  std_logic;
-    signal reset      :  std_logic;
-    signal write_data :  word_t;
-    signal read_data  :  word_t;
-    signal we         :  std_logic;
-    signal reg_sel    :  register_t;
+    signal clk        : std_logic;
+    signal reset      : std_logic;
+    signal write_data : word_t;
+    signal read_data  : word_t;
+    signal we         : std_logic;
+    signal reg_sel    : register_t;
 begin
     reset_gen : process
     begin
@@ -47,7 +47,7 @@ begin
 
     run_test : process(clk, reset)
         type state_t is (s0, s1, s2);
-        variable state : state_t := s0;
+        variable state   : state_t := s0;
     begin
         if reset = '1' then
             we <= '0';
