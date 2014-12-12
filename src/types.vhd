@@ -99,11 +99,31 @@ package types is
 	 
 	function alu_op_to_string( in_op : alu_op_t ) return string;
     function op_to_string( in_op : op_t ) return string;
+    function to_std_logic_vector(s: string) return std_logic_vector;
 end;
 
+
+
 package body types is
-	 function alu_op_to_string( in_op : alu_op_t ) return string is
-	 begin
+
+    function to_std_logic_vector(s: string) return std_logic_vector is 
+        variable slv: std_logic_vector(s'high-s'low downto 0);
+        variable k: integer;
+    begin
+        k := s'high-s'low;
+        for i in s'range loop
+            if s(i) = '1' then
+                slv(k) := '1';
+            else
+                slv(k) := '0';
+            end if;
+        k := k - 1;
+        end loop;
+        return slv;
+    end to_std_logic_vector; 
+
+    function alu_op_to_string( in_op : alu_op_t ) return string is
+    begin
 		case in_op is
             when alu_op_adc   => return "alu_op_adc";
             when alu_op_add   => return "alu_op_add";
