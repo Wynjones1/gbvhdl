@@ -26,7 +26,14 @@ architecture rtl of memory is
         for i in rom_t'range loop
             readline(input_file, mif_line);
             read(mif_line, temp_bv);
-            rom(i) := to_stdlogicvector(temp_bv);
+            for j in 0 to 7 loop
+                --rom(i) := to_stdlogicvector(temp_bv);
+                if temp_bv(j) = '1' then
+                    rom(i)(j) := '1';
+                else
+                    rom(i)(j) := '0';
+                end if;
+            end loop;
         end loop;
         return rom;
     end function;
@@ -52,7 +59,6 @@ begin
         end if;
     end process;
 
-    --index    <= to_integer(unsigned(address(LO_BYTE)));
-    index    <= 0;
+    index    <= to_integer(unsigned(address(LO_BYTE)));
     data_out <= rom(index);
 end rtl;

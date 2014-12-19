@@ -10,6 +10,7 @@ entity registers is
           write_sel  : in  register_t;
           read_sel   : in  register_t;
           write_data : in  word_t;
+          pc_out     : out word_t;
           read_data  : out word_t);
 end entity;
 
@@ -74,4 +75,6 @@ begin
         when others =>
         end case;
     end process;
+
+    pc_out <= pc;
 end rtl;

@@ -33,6 +33,7 @@ architecture rtl of cpu is
               write_sel  : in  register_t;
               read_sel   : in  register_t;
               write_data : in  word_t;
+              pc_out     : out word_t;
               read_data  : out word_t);
     end component;
 
@@ -58,10 +59,13 @@ architecture rtl of cpu is
     signal reg_rsel  : register_t   := (others => '0');
     signal reg_wdata : word_t       := (others => '0');
     signal reg_rdata : word_t       := (others => '0');
+    -- local signals
+    signal pc        : word_t       := (others => '0');
+    signal instr     : byte_t       := (others => '0');
 begin
     alu0    : alu       port map(alu_op, alu_i0, alu_i1, alu_q, alu_flags_in, alu_flags_out);
     memory0 : memory    port map(clk, reset, mem_we, mem_addr, mem_din, mem_dout, mem_valid);
-    reg0    : registers port map(clk, reset, reg_we, reg_wsel, reg_rsel, reg_wdata, reg_rdata);
+    reg0    : registers port map(clk, reset, reg_we, reg_wsel, reg_rsel, reg_wdata, pc, reg_rdata);
 
     control_proc:
     process(clk, reset)
@@ -71,24 +75,26 @@ begin
             alu_op        <= (others => '0');
             alu_i0        <= (others => '0');
             alu_i1        <= (others => '0');
-            alu_q         <= (others => '0');
             alu_flags_in  <= (others => '0');
-            alu_flags_out <= (others => '0');
             mem_we        <= '0';
             mem_addr      <= (others => '0'); 
             mem_din       <= (others => '0'); 
-            mem_dout      <= (others => '0'); 
-            mem_valid     <= '0';
             reg_we        <= '0';
             reg_wsel      <= (others => '0');
             reg_rsel      <= (others => '0');
             reg_wdata     <= (others => '0');
-            reg_rdata     <= (others => '0');
         elsif rising_edge(clk) then
             case state is
                 when state_load_instr    =>
+                    mem_addr <= pc;
+                    state    <= state_decode_instr;
                 when state_decode_instr  =>
+                    state     <= state_execute_instr;
+                    reg_we    <= '1';
+                    reg_wsel  <= register_pc;
+                    reg_wdata <= std_logic_vector(unsigned(pc) + 4);
                 when state_execute_instr =>
+                    state <= state_load_instr;
             end case;
         end if;
     end process;
