@@ -1,0 +1,59 @@
+[*]
+[*] GTKWave Analyzer v3.3.58 (w)1999-2014 BSI
+[*] Thu Dec 18 23:59:04 2014
+[*]
+[dumpfile] "/home/stuart/VHDL/gbvhdl/testing/waves.ghw"
+[dumpfile_mtime] "Thu Dec 18 23:57:52 2014"
+[dumpfile_size] 8707
+[savefile] "/home/stuart/VHDL/gbvhdl/testing/cpu.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-28.000000 1395000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.cpu_tb.
+[treeopen] top.cpu_tb.cpu_0.
+[treeopen] top.cpu_tb.cpu_0.memory0.
+[treeopen] top.cpu_tb.cpu_0.memory0.rom.
+[sst_width] 231
+[signals_width] 174
+[sst_expanded] 1
+[sst_vpaned_height] 320
+@200
+-Registers
+@22
+#{top.cpu_tb.cpu_0.reg_rdata[15:0]} top.cpu_tb.cpu_0.reg_rdata[15] top.cpu_tb.cpu_0.reg_rdata[14] top.cpu_tb.cpu_0.reg_rdata[13] top.cpu_tb.cpu_0.reg_rdata[12] top.cpu_tb.cpu_0.reg_rdata[11] top.cpu_tb.cpu_0.reg_rdata[10] top.cpu_tb.cpu_0.reg_rdata[9] top.cpu_tb.cpu_0.reg_rdata[8] top.cpu_tb.cpu_0.reg_rdata[7] top.cpu_tb.cpu_0.reg_rdata[6] top.cpu_tb.cpu_0.reg_rdata[5] top.cpu_tb.cpu_0.reg_rdata[4] top.cpu_tb.cpu_0.reg_rdata[3] top.cpu_tb.cpu_0.reg_rdata[2] top.cpu_tb.cpu_0.reg_rdata[1] top.cpu_tb.cpu_0.reg_rdata[0]
+#{top.cpu_tb.cpu_0.reg_wdata[15:0]} top.cpu_tb.cpu_0.reg_wdata[15] top.cpu_tb.cpu_0.reg_wdata[14] top.cpu_tb.cpu_0.reg_wdata[13] top.cpu_tb.cpu_0.reg_wdata[12] top.cpu_tb.cpu_0.reg_wdata[11] top.cpu_tb.cpu_0.reg_wdata[10] top.cpu_tb.cpu_0.reg_wdata[9] top.cpu_tb.cpu_0.reg_wdata[8] top.cpu_tb.cpu_0.reg_wdata[7] top.cpu_tb.cpu_0.reg_wdata[6] top.cpu_tb.cpu_0.reg_wdata[5] top.cpu_tb.cpu_0.reg_wdata[4] top.cpu_tb.cpu_0.reg_wdata[3] top.cpu_tb.cpu_0.reg_wdata[2] top.cpu_tb.cpu_0.reg_wdata[1] top.cpu_tb.cpu_0.reg_wdata[0]
+#{top.cpu_tb.cpu_0.reg_rsel[3:0]} top.cpu_tb.cpu_0.reg_rsel[3] top.cpu_tb.cpu_0.reg_rsel[2] top.cpu_tb.cpu_0.reg_rsel[1] top.cpu_tb.cpu_0.reg_rsel[0]
+#{top.cpu_tb.cpu_0.reg_wsel[3:0]} top.cpu_tb.cpu_0.reg_wsel[3] top.cpu_tb.cpu_0.reg_wsel[2] top.cpu_tb.cpu_0.reg_wsel[1] top.cpu_tb.cpu_0.reg_wsel[0]
+@200
+-Memory
+@800022
+#{top.cpu_tb.cpu_0.mem_dout[7:0]} top.cpu_tb.cpu_0.mem_dout[7] top.cpu_tb.cpu_0.mem_dout[6] top.cpu_tb.cpu_0.mem_dout[5] top.cpu_tb.cpu_0.mem_dout[4] top.cpu_tb.cpu_0.mem_dout[3] top.cpu_tb.cpu_0.mem_dout[2] top.cpu_tb.cpu_0.mem_dout[1] top.cpu_tb.cpu_0.mem_dout[0]
+@28
+top.cpu_tb.cpu_0.mem_dout[7]
+top.cpu_tb.cpu_0.mem_dout[6]
+top.cpu_tb.cpu_0.mem_dout[5]
+top.cpu_tb.cpu_0.mem_dout[4]
+top.cpu_tb.cpu_0.mem_dout[3]
+top.cpu_tb.cpu_0.mem_dout[2]
+top.cpu_tb.cpu_0.mem_dout[1]
+top.cpu_tb.cpu_0.mem_dout[0]
+@1001200
+-group_end
+@22
+#{top.cpu_tb.cpu_0.mem_din[7:0]} top.cpu_tb.cpu_0.mem_din[7] top.cpu_tb.cpu_0.mem_din[6] top.cpu_tb.cpu_0.mem_din[5] top.cpu_tb.cpu_0.mem_din[4] top.cpu_tb.cpu_0.mem_din[3] top.cpu_tb.cpu_0.mem_din[2] top.cpu_tb.cpu_0.mem_din[1] top.cpu_tb.cpu_0.mem_din[0]
+#{top.cpu_tb.cpu_0.mem_addr[15:0]} top.cpu_tb.cpu_0.mem_addr[15] top.cpu_tb.cpu_0.mem_addr[14] top.cpu_tb.cpu_0.mem_addr[13] top.cpu_tb.cpu_0.mem_addr[12] top.cpu_tb.cpu_0.mem_addr[11] top.cpu_tb.cpu_0.mem_addr[10] top.cpu_tb.cpu_0.mem_addr[9] top.cpu_tb.cpu_0.mem_addr[8] top.cpu_tb.cpu_0.mem_addr[7] top.cpu_tb.cpu_0.mem_addr[6] top.cpu_tb.cpu_0.mem_addr[5] top.cpu_tb.cpu_0.mem_addr[4] top.cpu_tb.cpu_0.mem_addr[3] top.cpu_tb.cpu_0.mem_addr[2] top.cpu_tb.cpu_0.mem_addr[1] top.cpu_tb.cpu_0.mem_addr[0]
+@28
+top.cpu_tb.cpu_0.memory0.index
+@201
+-ALU
+@22
+#{top.cpu_tb.cpu_0.alu_flags_out[7:0]} top.cpu_tb.cpu_0.alu_flags_out[7] top.cpu_tb.cpu_0.alu_flags_out[6] top.cpu_tb.cpu_0.alu_flags_out[5] top.cpu_tb.cpu_0.alu_flags_out[4] top.cpu_tb.cpu_0.alu_flags_out[3] top.cpu_tb.cpu_0.alu_flags_out[2] top.cpu_tb.cpu_0.alu_flags_out[1] top.cpu_tb.cpu_0.alu_flags_out[0]
+#{top.cpu_tb.cpu_0.alu_flags_in[7:0]} top.cpu_tb.cpu_0.alu_flags_in[7] top.cpu_tb.cpu_0.alu_flags_in[6] top.cpu_tb.cpu_0.alu_flags_in[5] top.cpu_tb.cpu_0.alu_flags_in[4] top.cpu_tb.cpu_0.alu_flags_in[3] top.cpu_tb.cpu_0.alu_flags_in[2] top.cpu_tb.cpu_0.alu_flags_in[1] top.cpu_tb.cpu_0.alu_flags_in[0]
+#{top.cpu_tb.cpu_0.alu_q[7:0]} top.cpu_tb.cpu_0.alu_q[7] top.cpu_tb.cpu_0.alu_q[6] top.cpu_tb.cpu_0.alu_q[5] top.cpu_tb.cpu_0.alu_q[4] top.cpu_tb.cpu_0.alu_q[3] top.cpu_tb.cpu_0.alu_q[2] top.cpu_tb.cpu_0.alu_q[1] top.cpu_tb.cpu_0.alu_q[0]
+#{top.cpu_tb.cpu_0.alu_i1[7:0]} top.cpu_tb.cpu_0.alu_i1[7] top.cpu_tb.cpu_0.alu_i1[6] top.cpu_tb.cpu_0.alu_i1[5] top.cpu_tb.cpu_0.alu_i1[4] top.cpu_tb.cpu_0.alu_i1[3] top.cpu_tb.cpu_0.alu_i1[2] top.cpu_tb.cpu_0.alu_i1[1] top.cpu_tb.cpu_0.alu_i1[0]
+#{top.cpu_tb.cpu_0.alu_i0[7:0]} top.cpu_tb.cpu_0.alu_i0[7] top.cpu_tb.cpu_0.alu_i0[6] top.cpu_tb.cpu_0.alu_i0[5] top.cpu_tb.cpu_0.alu_i0[4] top.cpu_tb.cpu_0.alu_i0[3] top.cpu_tb.cpu_0.alu_i0[2] top.cpu_tb.cpu_0.alu_i0[1] top.cpu_tb.cpu_0.alu_i0[0]
+#{top.cpu_tb.cpu_0.alu_op[4:0]} top.cpu_tb.cpu_0.alu_op[4] top.cpu_tb.cpu_0.alu_op[3] top.cpu_tb.cpu_0.alu_op[2] top.cpu_tb.cpu_0.alu_op[1] top.cpu_tb.cpu_0.alu_op[0]
+[pattern_trace] 1
+[pattern_trace] 0

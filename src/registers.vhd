@@ -6,10 +6,11 @@ use work.types.all;
 entity registers is
     port( clk        : in  std_logic;
           reset      : in  std_logic;
-          write_data : in  word_t;
-          read_data  : out word_t;
           we         : in  std_logic;
-          reg_sel    : in  register_t);
+          write_sel  : in  register_t;
+          read_sel   : in  register_t;
+          write_data : in  word_t;
+          read_data  : out word_t);
 end entity;
 
 architecture rtl of registers is
@@ -31,7 +32,7 @@ begin
             pc <= (others => '0');
         elsif rising_edge(clk) then
             if we = '1' then
-                case reg_sel is
+                case write_sel is
                 when register_a  => af(HI_BYTE) <= write_data(LO_BYTE);
                 when register_f  => af(LO_BYTE) <= write_data(LO_BYTE);
                 when register_b  => bc(HI_BYTE) <= write_data(LO_BYTE);
@@ -52,10 +53,10 @@ begin
         end if;
     end process;
 
-    output : process(reg_sel, af, bc, de, hl)
+    output : process(read_sel, af, bc, de, hl, sp, pc)
     begin
         read_data <= (others => '0');
-        case reg_sel is
+        case read_sel is
         when register_a  => read_data(LO_BYTE) <= af(HI_BYTE);
         when register_f  => read_data(LO_BYTE) <= af(LO_BYTE);
         when register_b  => read_data(LO_BYTE) <= bc(HI_BYTE);

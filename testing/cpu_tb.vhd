@@ -10,19 +10,11 @@ end;
 architecture rtl of cpu_tb is
     component cpu is
         port(clk        : in  std_logic;
-             reset      : in  std_logic;
-             read_data  : in  byte_t;
-             addr       : out word_t;
-             we         : out std_logic;
-             write_data : out byte_t);
+             reset      : in  std_logic);
     end component;
 
     signal clk        : std_logic;
     signal reset      : std_logic;
-    signal read_data  : byte_t;
-    signal addr       : word_t;
-    signal we         : std_logic;
-    signal write_data : byte_t;
 begin
     reset_gen : process
     begin
@@ -44,5 +36,5 @@ begin
     end process;
 
     cpu_0 : cpu
-        port map (clk, reset, read_data, addr, we, write_data);
+        port map (clk, reset);
 end rtl;

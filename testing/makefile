@@ -3,13 +3,15 @@ SRC          := $(shell find $(SRCDIR) -type f -name "*.vhd")
 OUT          := $(patsubst  %.vhd,%.o,$(SRC))
 FILE         := memory_tb
 FILE         := alu_tb
-FILE         := cpu_tb
 FILE         := registers_tb
+FILE         := memory_tb
+FILE         := cpu_tb
 WAVE         := --vcd=waves.vcd
 WAVE         := --wave=waves.ghw
-#TIME         := --stop-time=4ms
+TIME         := --stop-time=1000ns;
 GHDL_FLAGS   := --ieee=synopsys
 ASSERT_LEVEL := warning
+ASSERT_LEVEL := failure
 
 all: $(OUT)
 	ghdl -a $(GHDL_FLAGS) $(FILE).vhd

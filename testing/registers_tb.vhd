@@ -11,21 +11,24 @@ end;
 
 architecture rtl of registers_tb is
     component registers is
-        port( clk        : in  std_logic;
-              reset      : in  std_logic;
-              write_data : in  word_t;
-              read_data  : out word_t;
-              we         : in  std_logic;
-              reg_sel    : in  register_t);
+    port( clk        : in  std_logic;
+          reset      : in  std_logic;
+          we         : in  std_logic;
+          write_sel  : in  register_t;
+          read_sel   : in  register_t;
+          write_data : in  word_t;
+          read_data  : out word_t);
     end component;
 
-    signal clk            : std_logic;
-    signal reset          : std_logic := '1';
-    signal write_data     : word_t;
-    signal read_data      : word_t;
-    signal read_data_cmp  : word_t;
-    signal we             : std_logic;
-    signal reg_sel        : register_t;
+    signal clk            : std_logic  := '0';
+    signal reset          : std_logic  := '1';
+    signal we             : std_logic  := '0';
+    signal write_data     : word_t     := (others => '0');
+    signal read_data      : word_t     := (others => '0');
+    signal read_data_cmp  : word_t     := (others => '0');
+    signal write_sel      : register_t := (others => '0');
+    signal read_sel       : register_t := (others => '0');
+    signal lineno         : integer    := 0;
 begin
     reset_gen : process
     begin
@@ -49,7 +52,7 @@ begin
     end process;
 
     run_test : process(clk, reset)
-        type state_t is (s0, s1, s2);
+        type state_t is (s0, s1, s2, s3);
         variable state  : state_t := s0;
         file input      : text open read_mode is "/home/stuart/VHDL/gbvhdl/testing/tests/registers.txt";
         variable reg_s  : string( 4 downto 1);
@@ -60,16 +63,20 @@ begin
     begin
         if reset = '1' then
             we <= '0';
-            reg_sel <= register_a;
+            write_sel <= register_a;
+            read_sel  <= register_a;
         elsif rising_edge(clk) then
             case state is
             when s0 =>
                 if endfile(input) then
-                    state := s2;
+                    state := s3;
                 else
                     readline(input, l);
                     read(l, reg_s);
-                    reg_sel <= to_std_logic_vector(reg_s);
+                    write_sel <= to_std_logic_vector(reg_s);
+                    read(l, dummy);
+                    read(l, reg_s);
+                    read_sel <= to_std_logic_vector(reg_s);
                     read(l, dummy);
                     read(l, we_s);
                     if we_s(1) = '1' then
@@ -86,14 +93,18 @@ begin
                     state := s1;
                 end if;
             when s1 =>
-                    assert read_data_cmp = read_data;
                     state := s0;
+                    assert read_data_cmp = read_data;
+                    lineno <= lineno + 1;
             when s2 =>
+                    state := s0;
+            when s3 =>
                 report "End of simulation" severity failure;
             end case;
         end if;
     end process;
+
     registers_0 : registers
-        port map (clk, reset, write_data, read_data, we, reg_sel);
+        port map (clk, reset, we, write_sel, read_sel, write_data, read_data);
 
 end rtl;
