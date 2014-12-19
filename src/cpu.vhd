@@ -93,7 +93,11 @@ begin
                     state     <= state_execute_instr;
                     reg_we    <= '1';
                     reg_wsel  <= register_pc;
-                    reg_wdata <= std_logic_vector(unsigned(pc) + 4);
+
+                    if mem_dout(7 downto 6) = "01" then     -- Load r to r
+                    elsif mem_dout(7 downto 6) = "00"  and
+                          mem_dout(2 downto 0) = "110" then -- Load n to r
+                    end if;
                 when state_execute_instr =>
                     state <= state_load_instr;
             end case;

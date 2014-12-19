@@ -4,5 +4,6 @@
 *.ghw
 *.vcd
 *.txt
+.~*
 ise/*
 testing/tests/*
