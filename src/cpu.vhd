@@ -89,6 +89,7 @@ begin
                     mem_addr <= pc;
                     state    <= state_decode_instr;
                 when state_decode_instr  =>
+                    instr     <= mem_dout;
                     state     <= state_execute_instr;
                     reg_we    <= '1';
                     reg_wsel  <= register_pc;

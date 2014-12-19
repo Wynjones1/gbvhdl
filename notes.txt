@@ -2,3 +2,21 @@ rlca resets the zero flag whilst rl does not.
 rrca  ,,
 rla   ,,
 rra   ,,
+
+a 111
+b 000
+c 001
+d 101
+e 011
+h 100
+l 101
+
+bc 00
+de 01
+hl 10
+sp 11
+
+nz 00
+ z 01
+nc 10
+ c 11
