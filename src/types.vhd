@@ -11,14 +11,15 @@ package types is
     subtype LO_BYTE    is natural range  7 downto 0;
 
     -- Single register access
-    constant register_a  : register_t := "0111";
-    constant register_f  : register_t := "0110";
-    constant register_b  : register_t := "0000";
-    constant register_c  : register_t := "0001";
-    constant register_d  : register_t := "0010";
-    constant register_e  : register_t := "0011";
-    constant register_h  : register_t := "0100";
-    constant register_l  : register_t := "0101";
+    constant register_a  : register_t := "0111";          -- 7
+    constant register_f  : register_t := "0110";          -- 6
+    constant register_b  : register_t := "0000";          -- 0
+    constant register_c  : register_t := "0001";          -- 1
+    constant register_d  : register_t := "0010";          -- 2
+    constant register_e  : register_t := "0011";          -- 3
+    constant register_h  : register_t := "0100";          -- 4
+    constant register_l  : register_t := "0101";          -- 5
+    constant register_hl_indirect : register_t := "0110"; -- 6
     -- Double register access
     constant register_af : register_t := "1111";
     constant register_bc : register_t := "1000";
