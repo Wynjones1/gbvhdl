@@ -222,7 +222,7 @@ def output_conversion(m):
     fp = open("conversion.vhd", "w")
     var = "instruction"
     for i,e in enumerate(m):
-        fp.write('elsif %s = x"%s" then return "%s";\n' % (var, hex(i)[2:], string.ljust(e,15)))
+        fp.write('elsif %s = x"%s" then return "%s";\n' % (var, hex(i)[2:], string.ljust(e,15).replace(" ", ".")))
 
 def main():
     fp = open("all_ops.csv", "r")
@@ -241,7 +241,6 @@ def main():
                 a[idx] = i
                 b[idx] = "%s %s %s" % (i["name"], i["arg0"], i["arg1"])
         else:
-            break
             b = n
 
     output_html(m, n)

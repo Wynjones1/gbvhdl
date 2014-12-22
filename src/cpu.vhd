@@ -62,12 +62,24 @@ architecture rtl of cpu is
     -- local signals
     signal pc        : word_t       := (others => '0');
     signal instr_string : string(1 to 15);
+    signal immediate    : word_t;
+    -- instruction decode signals
+    signal r0,r1, f, t    : std_logic_vector(2 downto 0);
+    signal cc, dd, qq, ss : std_logic_vector(1 downto 0);
 begin
     alu0    : alu       port map(alu_op, alu_i0, alu_i1, alu_q, alu_flags_in, alu_flags_out);
     memory0 : memory    port map(clk, reset, mem_we, mem_addr, mem_din, mem_dout, mem_valid);
     reg0    : registers port map(clk, reset, reg_we, reg_wsel, reg_rsel, reg_wdata, pc, reg_rdata);
 
     instr_string <= instruction_to_string(mem_dout);
+    r0 <= mem_dout(5 downto 3);
+    f  <= mem_dout(5 downto 3);
+    t  <= mem_dout(5 downto 3);
+    dd <= mem_dout(5 downto 4);
+    qq <= mem_dout(5 downto 4);
+    ss <= mem_dout(5 downto 4);
+    cc <= mem_dout(4 downto 3);
+    r1 <= mem_dout(2 downto 0);
 
     control_proc:
     process(clk, reset)

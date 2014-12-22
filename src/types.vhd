@@ -208,22 +208,22 @@ package body types is
 
      function instruction_to_string(instruction : byte_t) return string is
      begin
-            if    instruction = x"0" then return "NOP            ";
-            elsif instruction = x"1" then return "LD BC d16      ";
-            elsif instruction = x"2" then return "LD (BC) A      ";
-            elsif instruction = x"3" then return "INC BC         ";
-            elsif instruction = x"4" then return "INC B          ";
-            elsif instruction = x"5" then return "DEC B          ";
-            elsif instruction = x"6" then return "LD B n         ";
-            elsif instruction = x"7" then return "RLCA           ";
-            elsif instruction = x"8" then return "LD (d16) SP    ";
-            elsif instruction = x"9" then return "ADD BC ss      ";
-            elsif instruction = x"a" then return "LD A (BC)      ";
-            elsif instruction = x"b" then return "DEC BC         ";
-            elsif instruction = x"c" then return "INC C          ";
-            elsif instruction = x"d" then return "DEC C          ";
-            elsif instruction = x"e" then return "LD C n         ";
-            elsif instruction = x"f" then return "RRCA           ";
+            if    instruction = x"00" then return "NOP            ";
+            elsif instruction = x"01" then return "LD BC d16      ";
+            elsif instruction = x"02" then return "LD (BC) A      ";
+            elsif instruction = x"03" then return "INC BC         ";
+            elsif instruction = x"04" then return "INC B          ";
+            elsif instruction = x"05" then return "DEC B          ";
+            elsif instruction = x"06" then return "LD B n         ";
+            elsif instruction = x"07" then return "RLCA           ";
+            elsif instruction = x"08" then return "LD (d16) SP    ";
+            elsif instruction = x"09" then return "ADD BC ss      ";
+            elsif instruction = x"0a" then return "LD A (BC)      ";
+            elsif instruction = x"0b" then return "DEC BC         ";
+            elsif instruction = x"0c" then return "INC C          ";
+            elsif instruction = x"0d" then return "DEC C          ";
+            elsif instruction = x"0e" then return "LD C n         ";
+            elsif instruction = x"0f" then return "RRCA           ";
             elsif instruction = x"10" then return "STOP           ";
             elsif instruction = x"11" then return "LD DE d16      ";
             elsif instruction = x"12" then return "LD  (DE) A     ";
