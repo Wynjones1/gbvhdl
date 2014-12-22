@@ -61,11 +61,13 @@ architecture rtl of cpu is
     signal reg_rdata : word_t       := (others => '0');
     -- local signals
     signal pc        : word_t       := (others => '0');
-    signal instr     : byte_t       := (others => '0');
+    signal instr_string : string(1 to 15);
 begin
     alu0    : alu       port map(alu_op, alu_i0, alu_i1, alu_q, alu_flags_in, alu_flags_out);
     memory0 : memory    port map(clk, reset, mem_we, mem_addr, mem_din, mem_dout, mem_valid);
     reg0    : registers port map(clk, reset, reg_we, reg_wsel, reg_rsel, reg_wdata, pc, reg_rdata);
+
+    instr_string <= instruction_to_string(mem_dout);
 
     control_proc:
     process(clk, reset)
@@ -89,7 +91,6 @@ begin
                     mem_addr <= pc;
                     state    <= state_decode_instr;
                 when state_decode_instr  =>
-                    instr     <= mem_dout;
                     state     <= state_execute_instr;
                     reg_we    <= '1';
                     reg_wsel  <= register_pc;

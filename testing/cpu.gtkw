@@ -1,10 +1,10 @@
 [*]
 [*] GTKWave Analyzer v3.3.58 (w)1999-2014 BSI
-[*] Fri Dec 19 21:10:25 2014
+[*] Mon Dec 22 18:44:46 2014
 [*]
 [dumpfile] "/home/stuart/VHDL/gbvhdl/testing/waves.ghw"
-[dumpfile_mtime] "Fri Dec 19 21:02:17 2014"
-[dumpfile_size] 9530
+[dumpfile_mtime] "Mon Dec 22 18:44:16 2014"
+[dumpfile_size] 10247
 [savefile] "/home/stuart/VHDL/gbvhdl/testing/cpu.gtkw"
 [timestart] 0
 [size] 1920 1053
@@ -37,7 +37,9 @@ top.cpu_tb.reset
 #{top.cpu_tb.cpu_0.reg0.af[15:0]} top.cpu_tb.cpu_0.reg0.af[15] top.cpu_tb.cpu_0.reg0.af[14] top.cpu_tb.cpu_0.reg0.af[13] top.cpu_tb.cpu_0.reg0.af[12] top.cpu_tb.cpu_0.reg0.af[11] top.cpu_tb.cpu_0.reg0.af[10] top.cpu_tb.cpu_0.reg0.af[9] top.cpu_tb.cpu_0.reg0.af[8] top.cpu_tb.cpu_0.reg0.af[7] top.cpu_tb.cpu_0.reg0.af[6] top.cpu_tb.cpu_0.reg0.af[5] top.cpu_tb.cpu_0.reg0.af[4] top.cpu_tb.cpu_0.reg0.af[3] top.cpu_tb.cpu_0.reg0.af[2] top.cpu_tb.cpu_0.reg0.af[1] top.cpu_tb.cpu_0.reg0.af[0]
 @200
 -Memory
-@c00023
+@821
+#{top.cpu_tb.cpu_0.instr_string[1:15]} top.cpu_tb.cpu_0.instr_string[1] top.cpu_tb.cpu_0.instr_string[2] top.cpu_tb.cpu_0.instr_string[3] top.cpu_tb.cpu_0.instr_string[4] top.cpu_tb.cpu_0.instr_string[5] top.cpu_tb.cpu_0.instr_string[6] top.cpu_tb.cpu_0.instr_string[7] top.cpu_tb.cpu_0.instr_string[8] top.cpu_tb.cpu_0.instr_string[9] top.cpu_tb.cpu_0.instr_string[10] top.cpu_tb.cpu_0.instr_string[11] top.cpu_tb.cpu_0.instr_string[12] top.cpu_tb.cpu_0.instr_string[13] top.cpu_tb.cpu_0.instr_string[14] top.cpu_tb.cpu_0.instr_string[15]
+@c00022
 #{top.cpu_tb.cpu_0.mem_dout[7:0]} top.cpu_tb.cpu_0.mem_dout[7] top.cpu_tb.cpu_0.mem_dout[6] top.cpu_tb.cpu_0.mem_dout[5] top.cpu_tb.cpu_0.mem_dout[4] top.cpu_tb.cpu_0.mem_dout[3] top.cpu_tb.cpu_0.mem_dout[2] top.cpu_tb.cpu_0.mem_dout[1] top.cpu_tb.cpu_0.mem_dout[0]
 @28
 top.cpu_tb.cpu_0.mem_dout[7]
@@ -48,7 +50,7 @@ top.cpu_tb.cpu_0.mem_dout[3]
 top.cpu_tb.cpu_0.mem_dout[2]
 top.cpu_tb.cpu_0.mem_dout[1]
 top.cpu_tb.cpu_0.mem_dout[0]
-@1401201
+@1401200
 -group_end
 @22
 #{top.cpu_tb.cpu_0.mem_din[7:0]} top.cpu_tb.cpu_0.mem_din[7] top.cpu_tb.cpu_0.mem_din[6] top.cpu_tb.cpu_0.mem_din[5] top.cpu_tb.cpu_0.mem_din[4] top.cpu_tb.cpu_0.mem_din[3] top.cpu_tb.cpu_0.mem_din[2] top.cpu_tb.cpu_0.mem_din[1] top.cpu_tb.cpu_0.mem_din[0]

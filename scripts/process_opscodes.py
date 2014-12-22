@@ -218,6 +218,12 @@ def output_html(m, n):
     fp.write("</table>\n")
     fp.write("</html>\n")
 
+def output_conversion(m):
+    fp = open("conversion.vhd", "w")
+    var = "instruction"
+    for i,e in enumerate(m):
+        fp.write('elsif %s = x"%s" then return "%s";\n' % (var, hex(i)[2:], string.ljust(e,15)))
+
 def main():
     fp = open("all_ops.csv", "r")
     t = [0] * 256;
@@ -239,6 +245,7 @@ def main():
             b = n
 
     output_html(m, n)
+    output_conversion(m)
     for i in downto_sort:
         for j in i:
             print(j)
