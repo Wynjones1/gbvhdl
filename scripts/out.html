@@ -1,0 +1,105 @@
+<html>
+<head>
+<link rel='stylesheet' type='text/css' href='out.css'>
+</head>
+<table width=100%>
+<tr>
+<td title='0x0' width=6%>NOP  </td><td title='0x1' width=6%>LD BC d16</td><td title='0x2' width=6%>LD (BC) A</td><td title='0x3' width=6%>INC BC </td><td title='0x4' width=6%>INC B </td><td title='0x5' width=6%>DEC B </td><td title='0x6' width=6%>LD B n</td><td title='0x7' width=6%>RLCA  </td><td title='0x8' width=6%>LD (d16) SP</td><td title='0x9' width=6%>ADD BC ss</td><td title='0xa' width=6%>LD A (BC)</td><td title='0xb' width=6%>DEC BC </td><td title='0xc' width=6%>INC C </td><td title='0xd' width=6%>DEC C </td><td title='0xe' width=6%>LD C n</td><td title='0xf' width=6%>RRCA  </td>
+</tr>
+<tr>
+<td title='0x10' width=6%>STOP  </td><td title='0x11' width=6%>LD DE d16</td><td title='0x12' width=6%>LD  (DE) A</td><td title='0x13' width=6%>INC DE </td><td title='0x14' width=6%>INC D </td><td title='0x15' width=6%>DEC D </td><td title='0x16' width=6%>LD D n</td><td title='0x17' width=6%>RLA  </td><td title='0x18' width=6%>JR r8 </td><td title='0x19' width=6%>ADD DE ss</td><td title='0x1a' width=6%>LD A (DE)</td><td title='0x1b' width=6%>DEC DE </td><td title='0x1c' width=6%>INC E </td><td title='0x1d' width=6%>DEC E </td><td title='0x1e' width=6%>LD E n</td><td title='0x1f' width=6%>RRA  </td>
+</tr>
+<tr>
+<td title='0x20' width=6%>JR NZ r8</td><td title='0x21' width=6%>LD HL d16</td><td title='0x22' width=6%>LD (HL++) A</td><td title='0x23' width=6%>INC HL </td><td title='0x24' width=6%>INC H </td><td title='0x25' width=6%>DEC H </td><td title='0x26' width=6%>LD H n</td><td title='0x27' width=6%>DDA  </td><td title='0x28' width=6%>JR Z r8</td><td title='0x29' width=6%>ADD HL ss</td><td title='0x2a' width=6%>LD A (HL++)</td><td title='0x2b' width=6%>DEC HL </td><td title='0x2c' width=6%>INC L </td><td title='0x2d' width=6%>DEC L </td><td title='0x2e' width=6%>LD L n</td><td title='0x2f' width=6%>CPL  </td>
+</tr>
+<tr>
+<td title='0x30' width=6%>JR NC r8</td><td title='0x31' width=6%>LD SP d16</td><td title='0x32' width=6%>LD (HL--)  A</td><td title='0x33' width=6%>INC SP </td><td title='0x34' width=6%>INC (HL) </td><td title='0x35' width=6%>DEC (HL) </td><td title='0x36' width=6%>LD (HL) d8</td><td title='0x37' width=6%>SCF  </td><td title='0x38' width=6%>JR C r8</td><td title='0x39' width=6%>ADD SP ss</td><td title='0x3a' width=6%>LD A (HL--)</td><td title='0x3b' width=6%>DEC SP </td><td title='0x3c' width=6%>INC A </td><td title='0x3d' width=6%>DEC A </td><td title='0x3e' width=6%>LD A n</td><td title='0x3f' width=6%>CCF  </td>
+</tr>
+<tr>
+<td title='0x40' width=6%>LD B B</td><td title='0x41' width=6%>LD B C</td><td title='0x42' width=6%>LD B D</td><td title='0x43' width=6%>LD B E</td><td title='0x44' width=6%>LD B H</td><td title='0x45' width=6%>LD B L</td><td title='0x46' width=6%>LD B (HL)</td><td title='0x47' width=6%>LD B A</td><td title='0x48' width=6%>LD C B</td><td title='0x49' width=6%>LD C C</td><td title='0x4a' width=6%>LD C D</td><td title='0x4b' width=6%>LD C E</td><td title='0x4c' width=6%>LD C H</td><td title='0x4d' width=6%>LD C L</td><td title='0x4e' width=6%>LD C (HL)</td><td title='0x4f' width=6%>LD C A</td>
+</tr>
+<tr>
+<td title='0x50' width=6%>LD D B</td><td title='0x51' width=6%>LD D C</td><td title='0x52' width=6%>LD D D</td><td title='0x53' width=6%>LD D E</td><td title='0x54' width=6%>LD D H</td><td title='0x55' width=6%>LD D L</td><td title='0x56' width=6%>LD D (HL)</td><td title='0x57' width=6%>LD D A</td><td title='0x58' width=6%>LD E B</td><td title='0x59' width=6%>LD E C</td><td title='0x5a' width=6%>LD E D</td><td title='0x5b' width=6%>LD E E</td><td title='0x5c' width=6%>LD E H</td><td title='0x5d' width=6%>LD E L</td><td title='0x5e' width=6%>LD E (HL)</td><td title='0x5f' width=6%>LD E A</td>
+</tr>
+<tr>
+<td title='0x60' width=6%>LD H B</td><td title='0x61' width=6%>LD H C</td><td title='0x62' width=6%>LD H D</td><td title='0x63' width=6%>LD H E</td><td title='0x64' width=6%>LD H H</td><td title='0x65' width=6%>LD H L</td><td title='0x66' width=6%>LD H (HL)</td><td title='0x67' width=6%>LD H A</td><td title='0x68' width=6%>LD L B</td><td title='0x69' width=6%>LD L C</td><td title='0x6a' width=6%>LD L D</td><td title='0x6b' width=6%>LD L E</td><td title='0x6c' width=6%>LD L H</td><td title='0x6d' width=6%>LD L L</td><td title='0x6e' width=6%>LD L (HL)</td><td title='0x6f' width=6%>LD L A</td>
+</tr>
+<tr>
+<td title='0x70' width=6%>LD (HL) B</td><td title='0x71' width=6%>LD (HL) C</td><td title='0x72' width=6%>LD (HL) D</td><td title='0x73' width=6%>LD (HL) E</td><td title='0x74' width=6%>LD (HL) H</td><td title='0x75' width=6%>LD (HL) L</td><td title='0x76' width=6%>HALT  </td><td title='0x77' width=6%>LD (HL) A</td><td title='0x78' width=6%>LD A B</td><td title='0x79' width=6%>LD A C</td><td title='0x7a' width=6%>LD A D</td><td title='0x7b' width=6%>LD A E</td><td title='0x7c' width=6%>LD A H</td><td title='0x7d' width=6%>LD A L</td><td title='0x7e' width=6%>LD A (HL)</td><td title='0x7f' width=6%>LD A A</td>
+</tr>
+<tr>
+<td title='0x80' width=6%>ADD A B</td><td title='0x81' width=6%>ADD A C</td><td title='0x82' width=6%>ADD A D</td><td title='0x83' width=6%>ADD A E</td><td title='0x84' width=6%>ADD A H</td><td title='0x85' width=6%>ADD A L</td><td title='0x86' width=6%>ADD A (HL)</td><td title='0x87' width=6%>ADD A A</td><td title='0x88' width=6%>ADC A B</td><td title='0x89' width=6%>ADC A C</td><td title='0x8a' width=6%>ADC A D</td><td title='0x8b' width=6%>ADC A E</td><td title='0x8c' width=6%>ADC A H</td><td title='0x8d' width=6%>ADC A L</td><td title='0x8e' width=6%>ADC A (HL)</td><td title='0x8f' width=6%>ADC A A</td>
+</tr>
+<tr>
+<td title='0x90' width=6%>SUB A B</td><td title='0x91' width=6%>SUB A C</td><td title='0x92' width=6%>SUB A D</td><td title='0x93' width=6%>SUB A E</td><td title='0x94' width=6%>SUB A H</td><td title='0x95' width=6%>SUB A L</td><td title='0x96' width=6%>SUB A (HL)</td><td title='0x97' width=6%>SUB A A</td><td title='0x98' width=6%>SBC A B</td><td title='0x99' width=6%>SBC A C</td><td title='0x9a' width=6%>SBC A D</td><td title='0x9b' width=6%>SBC A E</td><td title='0x9c' width=6%>SBC A H</td><td title='0x9d' width=6%>SBC A L</td><td title='0x9e' width=6%>SBC A (HL)</td><td title='0x9f' width=6%>SBC A A</td>
+</tr>
+<tr>
+<td title='0xa0' width=6%>AND A B</td><td title='0xa1' width=6%>AND A C</td><td title='0xa2' width=6%>AND A D</td><td title='0xa3' width=6%>AND A E</td><td title='0xa4' width=6%>AND A H</td><td title='0xa5' width=6%>AND A L</td><td title='0xa6' width=6%>AND A (HL)</td><td title='0xa7' width=6%>AND A A</td><td title='0xa8' width=6%>XOR A B</td><td title='0xa9' width=6%>XOR A C</td><td title='0xaa' width=6%>XOR A D</td><td title='0xab' width=6%>XOR A E</td><td title='0xac' width=6%>XOR A H</td><td title='0xad' width=6%>XOR A L</td><td title='0xae' width=6%>XOR A (HL)</td><td title='0xaf' width=6%>XOR A A</td>
+</tr>
+<tr>
+<td title='0xb0' width=6%>OR A B</td><td title='0xb1' width=6%>OR A C</td><td title='0xb2' width=6%>OR A D</td><td title='0xb3' width=6%>OR A E</td><td title='0xb4' width=6%>OR A H</td><td title='0xb5' width=6%>OR A L</td><td title='0xb6' width=6%>OR A (HL)</td><td title='0xb7' width=6%>OR A A</td><td title='0xb8' width=6%>CP A B</td><td title='0xb9' width=6%>CP A C</td><td title='0xba' width=6%>CP A D</td><td title='0xbb' width=6%>CP A E</td><td title='0xbc' width=6%>CP A H</td><td title='0xbd' width=6%>CP A L</td><td title='0xbe' width=6%>CP A (HL)</td><td title='0xbf' width=6%>CP A A</td>
+</tr>
+<tr>
+<td title='0xc0' width=6%>RET NZ </td><td title='0xc1' width=6%>POP BC </td><td title='0xc2' width=6%>JP NZ d16</td><td title='0xc3' width=6%>JP d16 </td><td title='0xc4' width=6%>CALL NZ d16</td><td title='0xc5' width=6%>PUSH BC </td><td title='0xc6' width=6%>ADD A n</td><td title='0xc7' width=6%>RST 00H </td><td title='0xc8' width=6%>RET Z </td><td title='0xc9' width=6%>RET  </td><td title='0xca' width=6%>JP Z d16</td><td title='0xcb' width=6%>CB  </td><td title='0xcc' width=6%>CALL Z d16</td><td title='0xcd' width=6%>CALL d16 </td><td title='0xce' width=6%>ADC A n</td><td title='0xcf' width=6%>RST 08H </td>
+</tr>
+<tr>
+<td title='0xd0' width=6%>RET NC </td><td title='0xd1' width=6%>POP DE </td><td title='0xd2' width=6%>JP NC d16</td><td title='0xd3' width=6%>INVALID  </td><td title='0xd4' width=6%>CALL NC d16</td><td title='0xd5' width=6%>PUSH DE </td><td title='0xd6' width=6%>SUB A n</td><td title='0xd7' width=6%>RST 10H </td><td title='0xd8' width=6%>RET C </td><td title='0xd9' width=6%>RETI  </td><td title='0xda' width=6%>JP C d16</td><td title='0xdb' width=6%>INVALID  </td><td title='0xdc' width=6%>CALL C d16</td><td title='0xdd' width=6%>INVALID  </td><td title='0xde' width=6%>SBC A n</td><td title='0xdf' width=6%>RST 18H </td>
+</tr>
+<tr>
+<td title='0xe0' width=6%>LDH (d8) A</td><td title='0xe1' width=6%>POP HL </td><td title='0xe2' width=6%>LD (C) A</td><td title='0xe3' width=6%>INVALID  </td><td title='0xe4' width=6%>INVALID  </td><td title='0xe5' width=6%>PUSH HL </td><td title='0xe6' width=6%>AND A n</td><td title='0xe7' width=6%>RST 20H </td><td title='0xe8' width=6%>ADD SP r8</td><td title='0xe9' width=6%>JP PC (HL)</td><td title='0xea' width=6%>LD (d16) A</td><td title='0xeb' width=6%>INVALID  </td><td title='0xec' width=6%>INVALID  </td><td title='0xed' width=6%>INVALID  </td><td title='0xee' width=6%>XOR A n</td><td title='0xef' width=6%>RST 28H </td>
+</tr>
+<tr>
+<td title='0xf0' width=6%>LDH A (d8)</td><td title='0xf1' width=6%>POP AF </td><td title='0xf2' width=6%>LD A (C)</td><td title='0xf3' width=6%>DI  </td><td title='0xf4' width=6%>INVALID  </td><td title='0xf5' width=6%>PUSH AF </td><td title='0xf6' width=6%>OR A n</td><td title='0xf7' width=6%>RST 30H </td><td title='0xf8' width=6%>LD HL SP + r8</td><td title='0xf9' width=6%>LD SP HL</td><td title='0xfa' width=6%>LD A (d16)</td><td title='0xfb' width=6%>EI  </td><td title='0xfc' width=6%>INVALID  </td><td title='0xfd' width=6%>INVALID  </td><td title='0xfe' width=6%>CP A n</td><td title='0xff' width=6%>RST 48H </td>
+</tr>
+</table>
+<table width=100%>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+<tr>
+<td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td><td width=6%>None</td>
+</tr>
+</table>
+</html>

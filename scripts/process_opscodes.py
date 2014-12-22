@@ -136,7 +136,12 @@ def expand_bits(codes):
 
 def gen_test_range(var, bits):
     out = ""
-    for i in bits: out += i
+    for i in bits:
+        if i in "10":
+            out += i
+        else:
+            out += "-"
+    return 'std_match(%s, "%s")'  % (var, out)
     if needs_expand(bits):
         if bits[2] in "rbl":
             if bits[5] in "r'":
@@ -166,7 +171,7 @@ def vhdl_output(code):
     var = "mem_dout"
     comment = "%s %s %s"  % (code["name"].ljust(4), code["arg0"], code["arg1"])
     s0 = "elsif %s then " % (gen_test_range(var, code["bits"]))
-    s1 = "%s -- %s"       % (string.ljust(s0,75), comment)
+    s1 = "%s -- %s"       % (s0, comment)
     downto_sort[s1.count("downto")].append(s1)
 
 def process_line(line):
