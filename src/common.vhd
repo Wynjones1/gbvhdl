@@ -24,7 +24,7 @@ package body common is
             when "011"  => return register_e;
             when "100"  => return register_h;
             when "101"  => return register_l;
-            when others => return "XXXX";
+            when others => return register_invalid;
         end case;
     end function;
 
@@ -35,7 +35,7 @@ package body common is
             when "01"   => return register_de;
             when "10"   => return register_hl;
             when "11"   => return register_sp;
-            when others => return "XXXX";
+            when others => return register_invalid;
         end case;
     end function;
 
@@ -51,7 +51,7 @@ package body common is
             when "01"   => return register_de;
             when "10"   => return register_hl;
             when "11"   => return register_af;
-            when others => return "XXXX";
+            when others => return register_invalid;
         end case;
     end function;
 
@@ -66,7 +66,7 @@ package body common is
             when "101"  => return alu_op_xor;
             when "110"  => return alu_op_or;
             when "111"  => return alu_op_cp;
-            when others => return "XXXXX";
+            when others => return alu_op_invalid;
         end case;
     end function;
 
@@ -81,7 +81,7 @@ package body common is
             when "101"  => return alu_op_sra;
             when "110"  => return alu_op_swap;
             when "111"  => return alu_op_srl;
-            when others => return "XXXXX";
+            when others => return alu_op_invalid;
         end case;
     end function;
 end common;

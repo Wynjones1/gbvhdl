@@ -2,6 +2,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use work.types.all;
+use work.common.all;
 
 entity cpu is
     port(clk        : in  std_logic;
@@ -64,22 +65,30 @@ architecture rtl of cpu is
     signal instr_string : string(1 to 15);
     signal immediate    : word_t;
     -- instruction decode signals
-    signal r0,r1, f, t    : std_logic_vector(2 downto 0);
+    signal r0,r1 : register_t;
+    signal f : alu_op_t;
+    signal t    : std_logic_vector(2 downto 0);
     signal cc, dd, qq, ss : std_logic_vector(1 downto 0);
+    -- load_process signals
+    signal load_init    : std_logic := '0';
+    signal load_cmd     : std_logic_vector(3 downto 0) := (others => '0');
+    signal load_arg0    : word_t := (others => '0');
+    signal load_arg1    : word_t := (others => '0');
+    signal load_reg_out : register_t;
 begin
     alu0    : alu       port map(alu_op, alu_i0, alu_i1, alu_q, alu_flags_in, alu_flags_out);
     memory0 : memory    port map(clk, reset, mem_we, mem_addr, mem_din, mem_dout, mem_valid);
     reg0    : registers port map(clk, reset, reg_we, reg_wsel, reg_rsel, reg_wdata, pc, reg_rdata);
 
     instr_string <= instruction_to_string(mem_dout);
-    r0 <= mem_dout(5 downto 3);
-    f  <= mem_dout(5 downto 3);
+    r0 <= r_table(mem_dout(5 downto 3));
+    f  <= f_table(mem_dout(5 downto 3));
     t  <= mem_dout(5 downto 3);
     dd <= mem_dout(5 downto 4);
     qq <= mem_dout(5 downto 4);
     ss <= mem_dout(5 downto 4);
     cc <= mem_dout(4 downto 3);
-    r1 <= mem_dout(2 downto 0);
+    r1 <= r_table(mem_dout(2 downto 0));
 
     control_proc:
     process(clk, reset)
@@ -182,6 +191,16 @@ begin
                 when state_execute_instr =>
                     state <= state_load_instr;
             end case;
+        end if;
+    end process;
+
+    load_process : process(clk, reset)
+        type state_t is (idle, load0, load1, transfer);
+        variable state : state_t := idle;
+    begin
+        if reset = '1' then
+            state := idle;
+        elsif rising_edge(clk) then
         end if;
     end process;
 end architecture;

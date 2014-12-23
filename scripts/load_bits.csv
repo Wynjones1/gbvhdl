@@ -1,0 +1,34 @@
+value, meaning
+load a b
+
+a = r, rr, (rr), (d8), (d16)
+b = r, rr, (rr), (d8), (d16), d8, d16
+
+x
+000 r
+001 rr
+010 (rr)
+011 (d8)
+100 (d16)
+101 d8
+110 d16
+
+000000 r,    r
+000001 r,    d8
+000010 r,    (rr)
+000011 r,    (d8)
+000100 r,    (d16)
+000101 rr,   rr
+000110 rr    d16
+000111 (rr)  r
+001000 (d16) rr
+001001 (rr)  d8
+001010 (d8)  r
+001011 (r)   r
+001100 push
+001101 pop
+
+load_i0_indirect = (true, false)
+load_i1_indirect = (true, false)
+load_i0_mode     = (r, rr, d8, d16)
+load_i1_mode     = (r, rr, d8, d16)

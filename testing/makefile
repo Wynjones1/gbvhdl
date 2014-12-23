@@ -1,4 +1,4 @@
-SRCDIR       := ../src/
+SRCDIR       := ../src
 SRC          := $(SRCDIR)/types.vhd $(shell find $(SRCDIR) -type f -name "*.vhd")
 OUT          := $(patsubst  %.vhd,%.o,$(SRC))
 FILE         := memory_tb

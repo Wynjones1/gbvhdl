@@ -12,22 +12,23 @@ package types is
     subtype LO_BYTE    is natural range  7 downto 0;
 
     -- Single register access
-    constant register_a  : register_t := "0111";          -- 7
-    constant register_f  : register_t := "0110";          -- 6
-    constant register_b  : register_t := "0000";          -- 0
-    constant register_c  : register_t := "0001";          -- 1
-    constant register_d  : register_t := "0010";          -- 2
-    constant register_e  : register_t := "0011";          -- 3
-    constant register_h  : register_t := "0100";          -- 4
-    constant register_l  : register_t := "0101";          -- 5
-    constant register_hl_indirect : register_t := "0110"; -- 6
+    constant register_a       : register_t := "0000";
+    constant register_f       : register_t := "0001";
+    constant register_b       : register_t := "0010";
+    constant register_c       : register_t := "0011";
+    constant register_d       : register_t := "0100";
+    constant register_e       : register_t := "0101";
+    constant register_h       : register_t := "0110";
+    constant register_l       : register_t := "0111";
+    constant register_af      : register_t := "1000";
+    constant register_bc      : register_t := "1001";
+    constant register_de      : register_t := "1010";
+    constant register_hl      : register_t := "1011";
+    constant register_sp      : register_t := "1100";
+    constant register_pc      : register_t := "1101";
+    constant register_invalid : register_t := "1111";
+
     -- Double register access
-    constant register_af : register_t := "1111";
-    constant register_bc : register_t := "1000";
-    constant register_de : register_t := "1001";
-    constant register_hl : register_t := "1010";
-    constant register_sp : register_t := "1011";
-    constant register_pc : register_t := "1100";
 
     constant op_add    : op_t := "000000";
     constant op_and    : op_t := "000001";
@@ -74,27 +75,28 @@ package types is
     constant op_swap   : op_t := "101010";
     constant op_xor    : op_t := "101011";
 
-    constant alu_op_adc   : alu_op_t := "00000";
-    constant alu_op_add   : alu_op_t := "00001";
-    constant alu_op_and   : alu_op_t := "00010";
-    constant alu_op_bit   : alu_op_t := "00011";
-    constant alu_op_cp    : alu_op_t := "00100";
-    constant alu_op_cpl   : alu_op_t := "00101";
-    constant alu_op_daa   : alu_op_t := "00110";
-    constant alu_op_or    : alu_op_t := "00111";
-    constant alu_op_rl    : alu_op_t := "01000";
-    constant alu_op_rr    : alu_op_t := "01001";
-    constant alu_op_rrc   : alu_op_t := "01010";
-    constant alu_op_sla   : alu_op_t := "01011";
-    constant alu_op_rlc   : alu_op_t := "01100";
-    constant alu_op_sra   : alu_op_t := "01101";
-    constant alu_op_srl   : alu_op_t := "01110";
-    constant alu_op_sub   : alu_op_t := "01111";
-    constant alu_op_sbc   : alu_op_t := "10000";
-    constant alu_op_swap  : alu_op_t := "10001";
-    constant alu_op_set   : alu_op_t := "10010";
-    constant alu_op_reset : alu_op_t := "10011";
-    constant alu_op_xor   : alu_op_t := "10100";
+    constant alu_op_adc     : alu_op_t := "00000";
+    constant alu_op_add     : alu_op_t := "00001";
+    constant alu_op_and     : alu_op_t := "00010";
+    constant alu_op_bit     : alu_op_t := "00011";
+    constant alu_op_cp      : alu_op_t := "00100";
+    constant alu_op_cpl     : alu_op_t := "00101";
+    constant alu_op_daa     : alu_op_t := "00110";
+    constant alu_op_or      : alu_op_t := "00111";
+    constant alu_op_rl      : alu_op_t := "01000";
+    constant alu_op_rr      : alu_op_t := "01001";
+    constant alu_op_rrc     : alu_op_t := "01010";
+    constant alu_op_sla     : alu_op_t := "01011";
+    constant alu_op_rlc     : alu_op_t := "01100";
+    constant alu_op_sra     : alu_op_t := "01101";
+    constant alu_op_srl     : alu_op_t := "01110";
+    constant alu_op_sub     : alu_op_t := "01111";
+    constant alu_op_sbc     : alu_op_t := "10000";
+    constant alu_op_swap    : alu_op_t := "10001";
+    constant alu_op_set     : alu_op_t := "10010";
+    constant alu_op_reset   : alu_op_t := "10011";
+    constant alu_op_xor     : alu_op_t := "10100";
+    constant alu_op_invalid : alu_op_t := "11111";
 
     constant CARRY_BIT      : integer := 4;
     constant HALF_CARRY_BIT : integer := 5;
@@ -463,7 +465,8 @@ package body types is
             elsif instruction = x"fc" then return "INVALID        ";
             elsif instruction = x"fd" then return "INVALID        ";
             elsif instruction = x"fe" then return "CP A n         ";
-            else  return                          "RST 48H        ";
+            elsif instruction = x"ff" then return "RST 48H        ";
+            else                           return "INVALID        ";
             end if;
      end function;
 
