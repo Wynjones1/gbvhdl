@@ -2,16 +2,13 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use work.types.all;
+use work.interfaces.all;
 
 entity registers is
-    port( clk        : in  std_logic;
-          reset      : in  std_logic;
-          we         : in  std_logic;
-          write_sel  : in  register_t;
-          read_sel   : in  register_t;
-          write_data : in  word_t;
-          pc_out     : out word_t;
-          read_data  : out word_t);
+    port( clk    : in  std_logic;
+          reset  : in  std_logic;
+          input  : in  registers_in_if;
+          output : out registers_out_if);
 end entity;
 
 architecture rtl of registers is
@@ -32,49 +29,71 @@ begin
             sp <= (others => '0');
             pc <= (others => '0');
         elsif rising_edge(clk) then
-            if we = '1' then
-                case write_sel is
-                when register_a  => af(HI_BYTE) <= write_data(LO_BYTE);
-                when register_f  => af(LO_BYTE) <= write_data(LO_BYTE);
-                when register_b  => bc(HI_BYTE) <= write_data(LO_BYTE);
-                when register_c  => bc(LO_BYTE) <= write_data(LO_BYTE);
-                when register_d  => de(HI_BYTE) <= write_data(LO_BYTE);
-                when register_e  => de(LO_BYTE) <= write_data(LO_BYTE);
-                when register_h  => hl(HI_BYTE) <= write_data(LO_BYTE);
-                when register_l  => hl(LO_BYTE) <= write_data(LO_BYTE);
-                when register_af => af <= write_data;
-                when register_bc => bc <= write_data;
-                when register_de => de <= write_data;
-                when register_hl => hl <= write_data;
-                when register_sp => sp <= write_data;
-                when register_pc => pc <= write_data;
+            if input.we = '1' then
+                case input.wsel is
+                when register_a  => af(HI_BYTE) <= input.data(LO_BYTE);
+                when register_f  => af(LO_BYTE) <= input.data(LO_BYTE);
+                when register_b  => bc(HI_BYTE) <= input.data(LO_BYTE);
+                when register_c  => bc(LO_BYTE) <= input.data(LO_BYTE);
+                when register_d  => de(HI_BYTE) <= input.data(LO_BYTE);
+                when register_e  => de(LO_BYTE) <= input.data(LO_BYTE);
+                when register_h  => hl(HI_BYTE) <= input.data(LO_BYTE);
+                when register_l  => hl(LO_BYTE) <= input.data(LO_BYTE);
+                when register_af => af <= input.data;
+                when register_bc => bc <= input.data;
+                when register_de => de <= input.data;
+                when register_hl => hl <= input.data;
+                when register_sp => sp <= input.data;
+                when register_pc => pc <= input.data;
                 when others =>
                 end case;
             end if;
         end if;
     end process;
 
-    output : process(read_sel, af, bc, de, hl, sp, pc)
+    output_proc : process(input)
     begin
-        read_data <= (others => '0');
-        case read_sel is
-        when register_a  => read_data(LO_BYTE) <= af(HI_BYTE);
-        when register_f  => read_data(LO_BYTE) <= af(LO_BYTE);
-        when register_b  => read_data(LO_BYTE) <= bc(HI_BYTE);
-        when register_c  => read_data(LO_BYTE) <= bc(LO_BYTE);
-        when register_d  => read_data(LO_BYTE) <= de(HI_BYTE);
-        when register_e  => read_data(LO_BYTE) <= de(LO_BYTE);
-        when register_h  => read_data(LO_BYTE) <= hl(HI_BYTE);
-        when register_l  => read_data(LO_BYTE) <= hl(LO_BYTE);
-        when register_af => read_data <= af;
-        when register_bc => read_data <= bc;
-        when register_de => read_data <= de;
-        when register_hl => read_data <= hl;
-        when register_sp => read_data <= sp;
-        when register_pc => read_data <= pc;
+        output.d0 <= (others => '0');
+        output.d1 <= (others => '0');
+        case input.rsel0 is
+        when register_a  => output.d0(LO_BYTE) <= af(HI_BYTE);
+        when register_f  => output.d0(LO_BYTE) <= af(LO_BYTE);
+        when register_b  => output.d0(LO_BYTE) <= bc(HI_BYTE);
+        when register_c  => output.d0(LO_BYTE) <= bc(LO_BYTE);
+        when register_d  => output.d0(LO_BYTE) <= de(HI_BYTE);
+        when register_e  => output.d0(LO_BYTE) <= de(LO_BYTE);
+        when register_h  => output.d0(LO_BYTE) <= hl(HI_BYTE);
+        when register_l  => output.d0(LO_BYTE) <= hl(LO_BYTE);
+        when register_af => output.d0 <= af;
+        when register_bc => output.d0 <= bc;
+        when register_de => output.d0 <= de;
+        when register_hl => output.d0 <= hl;
+        when register_sp => output.d0 <= sp;
+        when register_pc => output.d0 <= pc;
+        when others =>
+        end case;
+
+        case input.rsel1 is
+        when register_a  => output.d1(LO_BYTE) <= af(HI_BYTE);
+        when register_f  => output.d1(LO_BYTE) <= af(LO_BYTE);
+        when register_b  => output.d1(LO_BYTE) <= bc(HI_BYTE);
+        when register_c  => output.d1(LO_BYTE) <= bc(LO_BYTE);
+        when register_d  => output.d1(LO_BYTE) <= de(HI_BYTE);
+        when register_e  => output.d1(LO_BYTE) <= de(LO_BYTE);
+        when register_h  => output.d1(LO_BYTE) <= hl(HI_BYTE);
+        when register_l  => output.d1(LO_BYTE) <= hl(LO_BYTE);
+        when register_af => output.d1 <= af;
+        when register_bc => output.d1 <= bc;
+        when register_de => output.d1 <= de;
+        when register_hl => output.d1 <= hl;
+        when register_sp => output.d1 <= sp;
+        when register_pc => output.d1 <= pc;
         when others =>
         end case;
     end process;
 
-    pc_out <= pc;
+    output.pc <= pc;
+    output.a  <= af(HI_BYTE);
+    output.f  <= af(LO_BYTE);
+    output.sp <= sp;
 end rtl;

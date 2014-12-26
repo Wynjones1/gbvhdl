@@ -7,21 +7,21 @@ use std.textio.all;
 use work.types.all;
 use work.interfaces.all;
 
-entity memory_tb is
+entity load_logic_tb is
 end;
 
-architecture rtl of memory_tb is 
-    component memory is
+architecture rtl of load_logic_tb is 
+    component load_logic is
     port( clk    : in  std_logic;
           reset  : in  std_logic;
-          input  : in  memory_in_if;
-          output : out memory_out_if);
+          input  : in  load_logic_in_if;
+          output : out load_logic_out_if);
     end component;
 
     signal clk           : std_logic   := '0';
     signal reset         : std_logic   := '1';
-    signal input         : memory_in_if;
-    signal output        : memory_out_if;
+    signal input         : load_in_if;
+    signal output        : load_out_if;
     signal read_data_cmp : byte_t;
     signal lineno        : integer := 0;
 begin
@@ -46,7 +46,7 @@ begin
     run_test : process(clk, reset)
         type state_t is (s0, s1, s2, s3);
         variable state  : state_t := s0;
-        file fp  : text open read_mode is "/home/stuart/VHDL/gbvhdl/testing/tests/memory.txt";
+        file fp  : text open read_mode is "/home/stuart/VHDL/gbvhdl/testing/tests/load_store.txt";
         variable address_s : string(16 downto 1);
         variable we_s      : string( 1 downto 1);
         variable wdata_s   : string( 8 downto 1);
@@ -94,6 +94,6 @@ begin
         end if;
     end process;
 
-    memory_0 : memory
+    load_logic_0: load_logic
         port map (clk, reset, input, output);
 end rtl;

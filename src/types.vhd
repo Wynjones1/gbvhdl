@@ -11,7 +11,7 @@ package types is
     subtype HI_BYTE    is natural range 15 downto 8;
     subtype LO_BYTE    is natural range  7 downto 0;
 
-    -- Single register access
+    -- register access
     constant register_a       : register_t := "0000";
     constant register_f       : register_t := "0001";
     constant register_b       : register_t := "0010";
@@ -26,9 +26,8 @@ package types is
     constant register_hl      : register_t := "1011";
     constant register_sp      : register_t := "1100";
     constant register_pc      : register_t := "1101";
-    constant register_invalid : register_t := "1111";
-
-    -- Double register access
+    constant register_d8      : register_t := "1110"; -- not actually a register
+    constant register_d16     : register_t := "1111"; -- not actually a register
 
     constant op_add    : op_t := "000000";
     constant op_and    : op_t := "000001";

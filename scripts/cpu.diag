@@ -1,0 +1,9 @@
+blockdiag {
+    C [ label = "control" ]
+    M [ label = "memory"  ]
+    L [ label = "load"    ]
+    A [ label = "alu"     ]
+
+    M <-> L
+    C <-> L
+}

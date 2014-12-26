@@ -13,8 +13,8 @@ architecture rtl of cpu_tb is
              reset      : in  std_logic);
     end component;
 
-    signal clk        : std_logic;
-    signal reset      : std_logic;
+    signal clk        : std_logic := '0';
+    signal reset      : std_logic := '1';
 
     type temp_rcd is
         record

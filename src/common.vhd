@@ -4,17 +4,17 @@ use work.types.all;
 
 package common is
 --    impure function init_mem(input_file : in string) return 
-    function r_table(input : std_logic_vector(2 downto 0)) return std_logic_vector;
-    function d_table(input : std_logic_vector(1 downto 0)) return std_logic_vector;
-    function s_table(input : std_logic_vector(1 downto 0)) return std_logic_vector;
-    function q_table(input : std_logic_vector(1 downto 0)) return std_logic_vector;
-    function f_table(input : std_logic_vector(2 downto 0)) return std_logic_vector;
-    function l_table(input : std_logic_vector(2 downto 0)) return std_logic_vector;
+    function r_table(input : std_logic_vector(2 downto 0)) return register_t;
+    function d_table(input : std_logic_vector(1 downto 0)) return register_t;
+    function s_table(input : std_logic_vector(1 downto 0)) return register_t;
+    function q_table(input : std_logic_vector(1 downto 0)) return register_t;
+    function f_table(input : std_logic_vector(2 downto 0)) return alu_op_t;
+    function l_table(input : std_logic_vector(2 downto 0)) return alu_op_t;
 end;
 
 -- TODO: Maybe add report for invalid values.
 package body common is
-    function r_table(input : std_logic_vector(2 downto 0)) return std_logic_vector is
+    function r_table(input : std_logic_vector(2 downto 0)) return register_t is
     begin
         case input is
             when "111"  => return register_a;
@@ -24,38 +24,38 @@ package body common is
             when "011"  => return register_e;
             when "100"  => return register_h;
             when "101"  => return register_l;
-            when others => return register_invalid;
+            when others => return register_l; -- TODO: Fix
         end case;
     end function;
 
-    function d_table(input : std_logic_vector(1 downto 0)) return std_logic_vector is
+    function d_table(input : std_logic_vector(1 downto 0)) return register_t is
     begin
         case input is
             when "00"   => return register_bc;
             when "01"   => return register_de;
             when "10"   => return register_hl;
             when "11"   => return register_sp;
-            when others => return register_invalid;
+            when others => return register_sp; -- TODO: Fix
         end case;
     end function;
 
-    function s_table(input : std_logic_vector(1 downto 0)) return std_logic_vector is
+    function s_table(input : std_logic_vector(1 downto 0)) return register_t is
     begin
         return d_table(input);
     end function;
 
-    function q_table(input : std_logic_vector(1 downto 0)) return std_logic_vector is
+    function q_table(input : std_logic_vector(1 downto 0)) return register_t is
     begin
         case input is
             when "00"   => return register_bc;
             when "01"   => return register_de;
             when "10"   => return register_hl;
             when "11"   => return register_af;
-            when others => return register_invalid;
+            when others => return register_af; -- TODO: Fix
         end case;
     end function;
 
-    function f_table(input : std_logic_vector(2 downto 0)) return std_logic_vector is
+    function f_table(input : std_logic_vector(2 downto 0)) return alu_op_t is
     begin
         case input is
             when "000"  => return alu_op_add;
@@ -70,7 +70,7 @@ package body common is
         end case;
     end function;
 
-    function l_table(input : std_logic_vector(2 downto 0)) return std_logic_vector is
+    function l_table(input : std_logic_vector(2 downto 0)) return alu_op_t is
     begin
         case input is
             when "000"  => return alu_op_rlc;

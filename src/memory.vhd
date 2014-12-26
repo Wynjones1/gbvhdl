@@ -3,15 +3,13 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use std.textio.all;
 use work.types.all;
+use work.interfaces.all;
 
 entity memory is
-    port( clk      : in  std_logic;
-          reset    : in  std_logic;
-          we       : in  std_logic;
-          address  : in  word_t;
-          data_in  : in  byte_t;
-          data_out : out byte_t;
-          valid    : out std_logic);
+    port( clk    : in  std_logic;
+          reset  : in  std_logic;
+          input  : in  memory_in_if;
+          output : out memory_out_if);
 end entity;
 
 architecture rtl of memory is
@@ -45,20 +43,16 @@ begin
     process(clk, reset)
     begin
         if reset = '1' then
-            valid <= '0';
-            --for i in 0 to 255 loop
-            --    rom(i) <= (others
-            --end loop
-            --rom <= (others => (others => '0'));
+            output.valid <= '0';
             rom <= init_mem("../bin/DMG_ROM.mif");
         elsif rising_edge(clk) then
-            valid <= '1';
-            if we = '1' then
-                rom(index) <= data_in;
+            output.valid <= '1';
+            if input.we = '1' then
+                rom(index) <= input.data;
             end if;
         end if;
     end process;
 
-    index    <= to_integer(unsigned(address(LO_BYTE)));
-    data_out <= rom(index);
+    index       <= 0 when reset = '1' else to_integer(unsigned(input.address(LO_BYTE)));
+    output.data <= (others => 'U') when reset = '1' else rom(index);
 end rtl;
