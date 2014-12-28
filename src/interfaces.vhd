@@ -74,7 +74,7 @@ package interfaces is
     type alu_logic_in_if is
         record
             en   : std_logic;
-            mode : std_logic_vector(1 downto 0); -- 00 = register, 01 = immediate, 10 = indirect
+            mode : std_logic_vector(1 downto 0); -- 00 = register, 01 = immediate, 10 = indirect, 11 = cb
             op   : alu_op_t;
             rsel : register_t;
             reg  : registers_out_if;

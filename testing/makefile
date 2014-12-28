@@ -1,5 +1,5 @@
 SRCDIR       := ../src
-SRC          := $(SRCDIR)/types.vhd $(SRCDIR)/interfaces.vhd $(shell find $(SRCDIR) -type f -name "*.vhd")
+SRC          := $(SRCDIR)/types.vhd $(SRCDIR)/interfaces.vhd $(SRCDIR)/common.vhd $(shell find $(SRCDIR) -type f -name "*.vhd")
 OUT          := $(patsubst  %.vhd,%.o,$(SRC))
 FILE         := memory_tb
 FILE         := alu_tb
