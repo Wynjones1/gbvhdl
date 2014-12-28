@@ -19,7 +19,7 @@ begin
     output.q     <= q;
     i0 <= input.i0;
     i1 <= input.i1;
-    process(input)
+    process(flags, q, i0, i1, input)
         constant RES_WIDTH : integer := input.i0'length + 1;
         variable res_slv   : std_logic_vector(RES_WIDTH - 1 downto 0);
         variable res       : unsigned(RES_WIDTH - 1 downto 0);
@@ -30,7 +30,8 @@ begin
         i0_int    := unsigned(input.i0);
         i1_int    := unsigned(input.i1);
         carry     := unsigned(input.flags(CARRY_BIT downto CARRY_BIT));
-        output.flags <= input.flags;
+        flags <= input.flags;
+        q <= (others => '0');
         case input.op is
             when alu_op_add  =>
                 res     := ('0' & i0_int) + ('0' & i1_int);
@@ -212,8 +213,9 @@ begin
                 flags(HALF_CARRY_BIT) <= '0';
                 flags(SUBTRACT_BIT)   <= '0';
                 flags(ZERO_BIT)       <= nor_reduce(i0 xor i1);
+
             when others =>
-                q <= (others => '0');
+                q <= (others => 'X');
         end case;
     end process;
 end rtl;

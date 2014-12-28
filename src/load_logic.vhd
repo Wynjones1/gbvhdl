@@ -122,6 +122,16 @@ begin
                     output.mem.address <= a16;
                     output.mem.data    <= d16(LO_BYTE);
                     output.done <= '1';
+
+                    if input.inc_dec = "01" then
+                        output.reg.we   <= '1';
+                        output.reg.wsel <= input.r0;
+                        output.reg.data <= std_logic_vector(unsigned(input.reg.hl) + 1);
+                    elsif input.inc_dec = "10" then
+                        output.reg.we   <= '1';
+                        output.reg.wsel <= input.r0;
+                        output.reg.data <= std_logic_vector(unsigned(input.reg.hl) - 1);
+                    end if;
             end case;
         end if;
     end process;

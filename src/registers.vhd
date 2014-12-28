@@ -96,4 +96,5 @@ begin
     output.a  <= af(HI_BYTE);
     output.f  <= af(LO_BYTE);
     output.sp <= sp;
+    output.hl <= hl;
 end rtl;
