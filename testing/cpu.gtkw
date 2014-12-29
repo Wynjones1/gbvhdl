@@ -1,19 +1,18 @@
 [*]
 [*] GTKWave Analyzer v3.3.58 (w)1999-2014 BSI
-[*] Sun Dec 28 23:13:17 2014
+[*] Mon Dec 29 18:58:58 2014
 [*]
 [dumpfile] "/home/stuart/VHDL/gbvhdl/testing/waves.ghw"
-[dumpfile_mtime] "Sun Dec 28 23:11:37 2014"
-[dumpfile_size] 2094429
+[dumpfile_mtime] "Mon Dec 29 18:51:33 2014"
+[dumpfile_size] 841584
 [savefile] "/home/stuart/VHDL/gbvhdl/testing/cpu.gtkw"
 [timestart] 0
 [size] 1920 1053
 [pos] -1 -27
-*-27.047493 840000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-29.047493 1200000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.cpu_tb.
 [treeopen] top.cpu_tb.cpu_0.
-[treeopen] top.cpu_tb.cpu_0.alu0.
 [treeopen] top.cpu_tb.cpu_0.alu0.alu0.output.
 [treeopen] top.cpu_tb.cpu_0.alu0.alu_out.
 [treeopen] top.cpu_tb.cpu_0.alu0.input.

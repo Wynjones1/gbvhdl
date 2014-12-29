@@ -20,23 +20,22 @@ architecture rtl of alu_logic is
     end component;
 
     type state_t is (state_idle, state_register,
-                     state_indirect_0, state_indirect_1,
-                     state_immediate, state_cb_0, state_cb_reg,
+                     state_indirect, state_load_mem,
+                     state_cb_0, state_cb_reg,
                      state_inc, state_dec,
-                     state_inc_dec_store_0, state_inc_dec_store_1,
                      state_cb_store_reg, state_cb_store_indirect,
-                     state_cb_store_flags,
+                     state_store_flags,
                      state_cb_indirect, state_store);
 
     signal alu_in    : alu_in_if;
     signal alu_out   : alu_out_if;
     signal state     : state_t;
-    signal alu_op    : alu_op_t;
     signal temp_flag : byte_t;
+    signal alu_op    : alu_op_t;
 begin
     alu0 : alu port map(alu_in, alu_out);
-    alu_in.op <= alu_op;
-    alu_in.i0 <= input.reg.d0(LO_BYTE);
+    alu_in.op    <= alu_op;
+    alu_in.flags <= input.reg.f;
 
     main_proc: process(clk, reset)
         variable out_reg : register_t;
@@ -52,8 +51,6 @@ begin
             case state is
                 when state_idle      =>
                     if input.en = '1' then
-                        alu_op          <= input.op;
-                        alu_in.flags    <= input.reg.f;
                         output.reg.wsel <= register_a;
                         if input.op = alu_op_inc then
                             state            <= state_inc;
@@ -67,14 +64,15 @@ begin
 
                         elsif input.mode = alu_mode_register then
                             state <= state_register;
-                            output.reg.rsel0 <= input.rsel;
+                            output.reg.rsel0 <= register_a;
+                            output.reg.rsel1 <= input.rsel;
 
                         elsif input.mode = alu_mode_immediate then
-                            state <= state_immediate;
+                            state <= state_load_mem;
                             output.mem.address <= std_logic_vector(unsigned(input.reg.pc) + 1);
 
                         elsif input.mode = alu_mode_indirect then
-                            state <= state_indirect_0;
+                            state <= state_indirect;
                             output.reg.rsel0 <= register_hl;
 
                         elsif input.mode = alu_mode_cb then
@@ -86,45 +84,32 @@ begin
                     end if;
 
                 when state_inc =>
-                    state <= state_inc_dec_store_0;
+                    state <= state_store;
                     alu_in.i0 <= input.reg.d0(LO_BYTE);
                     alu_in.i1 <= x"01";
-                    alu_in.op <= alu_op_add;
+                    alu_op <= alu_op_add;
 
                 when state_dec =>
-                    state           <= state_inc_dec_store_0;
+                    state           <= state_store;
                     alu_in.i0       <= input.reg.d0(LO_BYTE);
                     alu_in.i1       <= x"01";
-                    alu_in.op       <= alu_op_sub;
-
-                when state_inc_dec_store_0 =>
-                    state           <= state_inc_dec_store_1;
-                    output.reg.we   <= '1';
-                    output.reg.wsel <= input.rsel;
-                    output.reg.data(LO_BYTE) <= alu_out.q;
-                    temp_flag       <= alu_out.flags;
-
-                when state_inc_dec_store_1 =>
-                    state           <= state_idle;
-                    output.done     <= '1';
-                    output.reg.we   <= '1';
-                    output.reg.wsel <= register_f;
-                    output.reg.data(LO_BYTE) <= temp_flag;
+                    alu_op       <= alu_op_sub;
 
                 when state_register  =>
                     state        <= state_store;
-                    alu_in.i1    <= input.reg.d0(LO_BYTE);
+                    alu_op    <= input.op;
+                    alu_in.i0    <= input.reg.d0(LO_BYTE);
+                    alu_in.i1    <= input.reg.d1(LO_BYTE);
 
-                when state_indirect_0 =>
-                    state <= state_indirect_1;
+                when state_indirect =>
+                    state <= state_load_mem;
+                    alu_op    <= input.op;
                     output.mem.address <= input.reg.d0;
 
-                when state_indirect_1 =>
+                when state_load_mem =>
                     state <= state_store;
-                    alu_in.i1 <= input.mem.data;
-
-                when state_immediate =>
-                    state <= state_store;
+                    alu_op <= input.op;
+                    alu_in.i0 <= input.reg.d0(LO_BYTE);
                     alu_in.i1 <= input.mem.data;
 
                 when state_cb_0 =>
@@ -156,13 +141,13 @@ begin
                 when state_cb_reg      =>
                     alu_in.i0 <= input.reg.d0(LO_BYTE);
                     if alu_op = alu_op_bit then
-                        state <= state_cb_store_flags;
+                        state <= state_store_flags;
                     else
                         state <= state_cb_store_reg;
                     end if;
 
                 when state_cb_store_reg =>
-                    state                    <= state_cb_store_flags;
+                    state                    <= state_store_flags;
                     output.reg.we            <= '1';
                     output.reg.wsel          <= out_reg;
                     output.reg.data(LO_BYTE) <= alu_out.q;
@@ -170,30 +155,29 @@ begin
                 when state_cb_indirect =>
                     alu_in.i0 <= input.mem.data;
                     if alu_op = alu_op_bit then
-                        state <= state_cb_store_flags;
+                        state <= state_store_flags;
                     else
                         state <= state_cb_store_indirect;
                     end if;
 
                 when state_cb_store_indirect =>
-                    state <= state_cb_store_flags;
+                    state <= state_store_flags;
                     output.mem.we      <= '1';
                     output.mem.address <= input.reg.hl;
                     output.mem.data    <= alu_out.q;
 
-                when state_cb_store_flags =>
+                when state_store =>
+                    state           <= state_store_flags;
+                    output.reg.we   <= '1';
+                    output.reg.wsel <= input.rsel;
+                    output.reg.data(LO_BYTE) <= alu_out.q;
+
+                when state_store_flags =>
                     state <= state_idle;
                     output.done     <= '1';
                     output.reg.we   <= '1';
                     output.reg.wsel <= register_f;
                     output.reg.data(LO_BYTE) <= alu_out.flags;
-
-                when state_store =>
-                    state           <= state_idle;
-                    output.done     <= '1';
-                    output.reg.we   <= '1';
-                    output.reg.wsel <= register_af;
-                    output.reg.data <= alu_out.q & alu_out.flags;
             end case;
         end if;
     end process;
