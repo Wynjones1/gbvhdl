@@ -36,6 +36,7 @@ architecture rtl of alu_logic is
 begin
     alu0 : alu port map(alu_in, alu_out);
     alu_in.op <= alu_op;
+    alu_in.i0 <= input.reg.d0(LO_BYTE);
 
     main_proc: process(clk, reset)
         variable out_reg : register_t;
@@ -52,7 +53,6 @@ begin
                 when state_idle      =>
                     if input.en = '1' then
                         alu_op          <= input.op;
-                        alu_in.i0       <= input.reg.a;
                         alu_in.flags    <= input.reg.f;
                         output.reg.wsel <= register_a;
                         if input.op = alu_op_inc then
@@ -61,7 +61,9 @@ begin
                             output.reg.wsel  <= input.rsel;
 
                         elsif input.op = alu_op_dec then
-                            state <= state_dec;
+                            state            <= state_dec;
+                            output.reg.rsel0 <= input.rsel;
+                            output.reg.wsel  <= input.rsel;
 
                         elsif input.mode = alu_mode_register then
                             state <= state_register;
@@ -98,16 +100,16 @@ begin
                 when state_inc_dec_store_0 =>
                     state           <= state_inc_dec_store_1;
                     output.reg.we   <= '1';
-                    output.reg.wsel <= input.r0;
-                    output.reg.data <= alu_out.q;
-                    temp_flag       <= alu_out.f;
+                    output.reg.wsel <= input.rsel;
+                    output.reg.data(LO_BYTE) <= alu_out.q;
+                    temp_flag       <= alu_out.flags;
 
                 when state_inc_dec_store_1 =>
                     state           <= state_idle;
                     output.done     <= '1';
                     output.reg.we   <= '1';
                     output.reg.wsel <= register_f;
-                    output.reg.data <= temp_flag;
+                    output.reg.data(LO_BYTE) <= temp_flag;
 
                 when state_register  =>
                     state        <= state_store;
