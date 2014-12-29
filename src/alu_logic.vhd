@@ -22,14 +22,17 @@ architecture rtl of alu_logic is
     type state_t is (state_idle, state_register,
                      state_indirect_0, state_indirect_1,
                      state_immediate, state_cb_0, state_cb_reg,
+                     state_inc, state_dec,
+                     state_inc_dec_store_0, state_inc_dec_store_1,
                      state_cb_store_reg, state_cb_store_indirect,
                      state_cb_store_flags,
                      state_cb_indirect, state_store);
 
-    signal alu_in  : alu_in_if;
-    signal alu_out : alu_out_if;
-    signal state   : state_t;
-    signal alu_op  : alu_op_t;
+    signal alu_in    : alu_in_if;
+    signal alu_out   : alu_out_if;
+    signal state     : state_t;
+    signal alu_op    : alu_op_t;
+    signal temp_flag : byte_t;
 begin
     alu0 : alu port map(alu_in, alu_out);
     alu_in.op <= alu_op;
@@ -47,28 +50,64 @@ begin
             output.done   <= '0';
             case state is
                 when state_idle      =>
-                    alu_op    <= input.op;
-                    alu_in.i0    <= input.reg.a;
-                    alu_in.flags <= input.reg.f;
                     if input.en = '1' then
-                        case input.mode is
-                            when "00" =>
-                                state <= state_register;
-                                output.reg.rsel0 <= input.rsel;
-                            when "01" =>
-                                state <= state_immediate;
-                                output.mem.address <= std_logic_vector(unsigned(input.reg.pc) + 1);
-                            when "10" =>
-                                state <= state_indirect_0;
-                                output.reg.rsel0 <= register_hl;
-                            when "11" =>
-                                state <= state_cb_0;
-                                output.mem.address <= std_logic_vector(unsigned(input.reg.pc) + 1);
-                            when others =>
-                        end case;
+                        alu_op          <= input.op;
+                        alu_in.i0       <= input.reg.a;
+                        alu_in.flags    <= input.reg.f;
+                        output.reg.wsel <= register_a;
+                        if input.op = alu_op_inc then
+                            state            <= state_inc;
+                            output.reg.rsel0 <= input.rsel;
+                            output.reg.wsel  <= input.rsel;
+
+                        elsif input.op = alu_op_dec then
+                            state <= state_dec;
+
+                        elsif input.mode = alu_mode_register then
+                            state <= state_register;
+                            output.reg.rsel0 <= input.rsel;
+
+                        elsif input.mode = alu_mode_immediate then
+                            state <= state_immediate;
+                            output.mem.address <= std_logic_vector(unsigned(input.reg.pc) + 1);
+
+                        elsif input.mode = alu_mode_indirect then
+                            state <= state_indirect_0;
+                            output.reg.rsel0 <= register_hl;
+
+                        elsif input.mode = alu_mode_cb then
+                            state <= state_cb_0;
+                            output.mem.address <= std_logic_vector(unsigned(input.reg.pc) + 1);
+                        end if;
                     else
                         state <= state_idle;
                     end if;
+
+                when state_inc =>
+                    state <= state_inc_dec_store_0;
+                    alu_in.i0 <= input.reg.d0(LO_BYTE);
+                    alu_in.i1 <= x"01";
+                    alu_in.op <= alu_op_add;
+
+                when state_dec =>
+                    state           <= state_inc_dec_store_0;
+                    alu_in.i0       <= input.reg.d0(LO_BYTE);
+                    alu_in.i1       <= x"01";
+                    alu_in.op       <= alu_op_sub;
+
+                when state_inc_dec_store_0 =>
+                    state           <= state_inc_dec_store_1;
+                    output.reg.we   <= '1';
+                    output.reg.wsel <= input.r0;
+                    output.reg.data <= alu_out.q;
+                    temp_flag       <= alu_out.f;
+
+                when state_inc_dec_store_1 =>
+                    state           <= state_idle;
+                    output.done     <= '1';
+                    output.reg.we   <= '1';
+                    output.reg.wsel <= register_f;
+                    output.reg.data <= temp_flag;
 
                 when state_register  =>
                     state        <= state_store;

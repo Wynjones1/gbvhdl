@@ -7,6 +7,7 @@ package types is
     subtype word_t     is std_logic_vector(15 downto 0);
     subtype op_t       is std_logic_vector( 5 downto 0);
     subtype alu_op_t   is std_logic_vector( 4 downto 0);
+    subtype alu_mode_t is std_logic_vector( 1 downto 0);
     subtype register_t is std_logic_vector( 3 downto 0);
     subtype HI_BYTE    is natural range 15 downto 8;
     subtype LO_BYTE    is natural range  7 downto 0;
@@ -98,6 +99,11 @@ package types is
     constant alu_op_inc     : alu_op_t := "10101"; -- Dummy op
     constant alu_op_dec     : alu_op_t := "10110"; -- Dummy op
     constant alu_op_invalid : alu_op_t := "11111";
+
+    constant alu_mode_register  : alu_mode_t := "00";
+    constant alu_mode_immediate : alu_mode_t := "01";
+    constant alu_mode_indirect  : alu_mode_t := "10";
+    constant alu_mode_cb        : alu_mode_t := "11";
 
     constant CARRY_BIT      : integer := 4;
     constant HALF_CARRY_BIT : integer := 5;

@@ -141,6 +141,12 @@ begin
                     elsif std_match(mem_out.data, "00100111") then  -- DDA   
                     elsif std_match(mem_out.data, "00101111") then  -- CPL   
                     elsif std_match(mem_out.data, "00110100") then  -- INC  (HL) 
+                        state <= state_wait_for_alu;
+                        alu_in.en   <= '1';
+                        alu_en      <= '1';
+                        alu_in.mode <= "10";
+                        alu_in.rsel <= register_hl;
+                        instr_size  <= 1;
                     elsif std_match(mem_out.data, "00110101") then  -- DEC  (HL) 
                     elsif std_match(mem_out.data, "00110111") then  -- SCF   
                     elsif std_match(mem_out.data, "00111111") then  -- CCF   
