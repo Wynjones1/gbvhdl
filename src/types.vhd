@@ -95,6 +95,8 @@ package types is
     constant alu_op_set     : alu_op_t := "10010";
     constant alu_op_reset   : alu_op_t := "10011";
     constant alu_op_xor     : alu_op_t := "10100";
+    constant alu_op_inc     : alu_op_t := "10101"; -- Dummy op
+    constant alu_op_dec     : alu_op_t := "10110"; -- Dummy op
     constant alu_op_invalid : alu_op_t := "11111";
 
     constant CARRY_BIT      : integer := 4;

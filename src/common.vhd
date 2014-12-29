@@ -10,6 +10,8 @@ package common is
     function q_table(input : std_logic_vector(1 downto 0)) return register_t;
     function f_table(input : std_logic_vector(2 downto 0)) return alu_op_t;
     function l_table(input : std_logic_vector(2 downto 0)) return alu_op_t;
+
+    function need_to_jump(cc : std_logic_vector(1 downto 0); flags : std_logic_vector(7 downto 4)) return boolean;
 end;
 
 -- TODO: Maybe add report for invalid values.
@@ -83,5 +85,16 @@ package body common is
             when "111"  => return alu_op_srl;
             when others => return alu_op_invalid;
         end case;
+    end function;
+
+    function need_to_jump(
+        cc    : std_logic_vector(1 downto 0);
+        flags : std_logic_vector(7 downto 4))
+        return boolean is
+    begin
+        return ((cc = "00") and (flags(ZERO_BIT)  = '0')) or   -- NZ
+               ((cc = "01") and (flags(ZERO_BIT)  = '1')) or   --  Z
+               ((cc = "10") and (flags(CARRY_BIT) = '0')) or   -- NC
+               ((cc = "11") and (flags(CARRY_BIT) = '1'));     --  C
     end function;
 end common;

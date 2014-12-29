@@ -7,7 +7,8 @@ FILE         := registers_tb
 FILE         := cpu_tb
 WAVE         := --vcd=waves.vcd
 WAVE         := --wave=waves.ghw
-TIME         := --stop-time=1000ns;
+#TIME         := --stop-time=2000ns;
+TIME         := --stop-time=1ms;
 GHDL_FLAGS   := --ieee=synopsys
 ASSERT_LEVEL := warning
 ASSERT_LEVEL := failure

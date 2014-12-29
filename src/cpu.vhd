@@ -41,7 +41,9 @@ architecture rtl of cpu is
     end component;
 
     type state_t is (state_load_instr, state_decode_instr,
-                     state_execute_instr, state_wait_for_load, state_wait_for_alu, state_increment_pc);
+                     state_execute_instr, state_wait_for_load,
+                     state_rel_jump,
+                     state_wait_for_alu, state_increment_pc);
     signal state : state_t;
 
     -- alu i/o signals
@@ -77,6 +79,7 @@ architecture rtl of cpu is
     signal load_en      : std_logic := '0';
     signal alu_en       : std_logic := '0';
     signal instr_size   : integer range 1 to 3;
+
 begin
     memory0 : memory     port map(clk, reset, mem_in_mux, mem_out);
     reg0    : registers  port map(clk, reset, reg_in_mux, reg_out);
@@ -122,9 +125,13 @@ begin
                     --report instr_string severity note;
                     instr_string <= instruction_to_string(mem_out.data);
                     state       <= state_execute_instr;
-                    reg_in.we   <= '1';
+                    reg_in.we   <= '0';
                     reg_in.wsel <= register_pc;
                     if    std_match(mem_out.data, "00000000") then  -- NOP   
+                        instr_size  <= 1;
+                        reg_in.we   <= '1';
+                        reg_in.data <= std_logic_vector(unsigned(reg_out.pc) + 1);
+                        state       <= state_increment_pc;
                     elsif std_match(mem_out.data, "00000111") then  -- RLCA  
                     elsif std_match(mem_out.data, "00001111") then  -- RRCA  
                     elsif std_match(mem_out.data, "00010000") then  -- STOP  
@@ -139,7 +146,12 @@ begin
                     elsif std_match(mem_out.data, "00111111") then  -- CCF   
                     elsif std_match(mem_out.data, "11000011") then  -- JP   d16 
                     elsif std_match(mem_out.data, "11001001") then  -- RET   
-                    elsif std_match(mem_out.data, "11001011") then  -- CB    
+                    elsif std_match(mem_out.data, "11001011") then  -- CB
+                        state <= state_wait_for_alu;
+                        alu_in.en   <= '1';
+                        alu_en      <= '1';
+                        alu_in.mode <= "11";
+                        instr_size  <= 2;
                     elsif std_match(mem_out.data, "11001101") then  -- CALL d16 
                     elsif std_match(mem_out.data, "11011001") then  -- RETI  
                     elsif std_match(mem_out.data, "11101000") then  -- ADD  SP r8
@@ -349,6 +361,13 @@ begin
                         instr_size       <= 1;
 
                     elsif std_match(mem_out.data, "001--000") then  -- JR   cc r8
+                        state      <= state_increment_pc;
+                        instr_size <= 2;
+                        reg_in.we  <= '1';
+                        if need_to_jump(mem_out.data(4 downto 3), reg_out.f(7 downto 4)) then
+                                state <= state_rel_jump;
+                                mem_in.address <= std_logic_vector(unsigned(reg_out.pc) + 1);
+                        end if;
                     elsif std_match(mem_out.data, "110--000") then  -- RET  cc 
                     elsif std_match(mem_out.data, "110--010") then  -- JP   cc d16
                     elsif std_match(mem_out.data, "110--100") then  -- CALL cc d16
@@ -452,6 +471,12 @@ begin
                     else
                         state <= state_wait_for_alu;
                     end if;
+
+                when state_rel_jump =>
+                    state <= state_increment_pc;
+                    reg_in.we   <= '1';
+                    reg_in.wsel <= register_pc;
+                    reg_in.data <= std_logic_vector( unsigned(reg_out.pc) + unsigned(resize(signed(mem_out.data), 16)) + 2);
 
                 when state_increment_pc =>
                     state <= state_load_instr;

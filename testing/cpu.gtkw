@@ -1,18 +1,22 @@
 [*]
 [*] GTKWave Analyzer v3.3.58 (w)1999-2014 BSI
-[*] Sun Dec 28 16:51:37 2014
+[*] Sun Dec 28 23:13:17 2014
 [*]
 [dumpfile] "/home/stuart/VHDL/gbvhdl/testing/waves.ghw"
-[dumpfile_mtime] "Sun Dec 28 16:51:19 2014"
-[dumpfile_size] 2093665
+[dumpfile_mtime] "Sun Dec 28 23:11:37 2014"
+[dumpfile_size] 2094429
 [savefile] "/home/stuart/VHDL/gbvhdl/testing/cpu.gtkw"
-[timestart] 120000000
-[size] 1000 600
-[pos] -1 -1
-*-27.047493 310000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[timestart] 0
+[size] 1920 1053
+[pos] -1 -27
+*-27.047493 840000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.cpu_tb.
+[treeopen] top.cpu_tb.cpu_0.
+[treeopen] top.cpu_tb.cpu_0.alu0.
 [treeopen] top.cpu_tb.cpu_0.alu0.alu0.output.
+[treeopen] top.cpu_tb.cpu_0.alu0.alu_out.
+[treeopen] top.cpu_tb.cpu_0.alu0.input.
 [treeopen] top.cpu_tb.cpu_0.alu_in.
 [treeopen] top.cpu_tb.cpu_0.memory0.input.
 [treeopen] top.cpu_tb.cpu_0.memory0.output.
@@ -20,7 +24,7 @@
 [sst_width] 231
 [signals_width] 302
 [sst_expanded] 1
-[sst_vpaned_height] 320
+[sst_vpaned_height] 658
 @28
 top.cpu_tb.clk
 top.cpu_tb.reset
@@ -30,6 +34,8 @@ top.cpu_tb.reset
 top.cpu_tb.cpu_0.state
 top.cpu_tb.cpu_0.alu_en
 top.cpu_tb.cpu_0.load_en
+@29
+top.cpu_tb.cpu_0.instr_size
 @200
 -Registers
 @22
@@ -41,8 +47,26 @@ top.cpu_tb.cpu_0.load_en
 #{top.cpu_tb.cpu_0.reg0.af[15:0]} top.cpu_tb.cpu_0.reg0.af[15] top.cpu_tb.cpu_0.reg0.af[14] top.cpu_tb.cpu_0.reg0.af[13] top.cpu_tb.cpu_0.reg0.af[12] top.cpu_tb.cpu_0.reg0.af[11] top.cpu_tb.cpu_0.reg0.af[10] top.cpu_tb.cpu_0.reg0.af[9] top.cpu_tb.cpu_0.reg0.af[8] top.cpu_tb.cpu_0.reg0.af[7] top.cpu_tb.cpu_0.reg0.af[6] top.cpu_tb.cpu_0.reg0.af[5] top.cpu_tb.cpu_0.reg0.af[4] top.cpu_tb.cpu_0.reg0.af[3] top.cpu_tb.cpu_0.reg0.af[2] top.cpu_tb.cpu_0.reg0.af[1] top.cpu_tb.cpu_0.reg0.af[0]
 @200
 -Memory
-@820
+@800820
 #{top.cpu_tb.cpu_0.instr_string[1:15]} top.cpu_tb.cpu_0.instr_string[1] top.cpu_tb.cpu_0.instr_string[2] top.cpu_tb.cpu_0.instr_string[3] top.cpu_tb.cpu_0.instr_string[4] top.cpu_tb.cpu_0.instr_string[5] top.cpu_tb.cpu_0.instr_string[6] top.cpu_tb.cpu_0.instr_string[7] top.cpu_tb.cpu_0.instr_string[8] top.cpu_tb.cpu_0.instr_string[9] top.cpu_tb.cpu_0.instr_string[10] top.cpu_tb.cpu_0.instr_string[11] top.cpu_tb.cpu_0.instr_string[12] top.cpu_tb.cpu_0.instr_string[13] top.cpu_tb.cpu_0.instr_string[14] top.cpu_tb.cpu_0.instr_string[15]
+@28
+top.cpu_tb.cpu_0.instr_string[1]
+top.cpu_tb.cpu_0.instr_string[2]
+top.cpu_tb.cpu_0.instr_string[3]
+top.cpu_tb.cpu_0.instr_string[4]
+top.cpu_tb.cpu_0.instr_string[5]
+top.cpu_tb.cpu_0.instr_string[6]
+top.cpu_tb.cpu_0.instr_string[7]
+top.cpu_tb.cpu_0.instr_string[8]
+top.cpu_tb.cpu_0.instr_string[9]
+top.cpu_tb.cpu_0.instr_string[10]
+top.cpu_tb.cpu_0.instr_string[11]
+top.cpu_tb.cpu_0.instr_string[12]
+top.cpu_tb.cpu_0.instr_string[13]
+top.cpu_tb.cpu_0.instr_string[14]
+top.cpu_tb.cpu_0.instr_string[15]
+@1001200
+-group_end
 @22
 #{top.cpu_tb.cpu_0.memory0.input.address[15:0]} top.cpu_tb.cpu_0.memory0.input.address[15] top.cpu_tb.cpu_0.memory0.input.address[14] top.cpu_tb.cpu_0.memory0.input.address[13] top.cpu_tb.cpu_0.memory0.input.address[12] top.cpu_tb.cpu_0.memory0.input.address[11] top.cpu_tb.cpu_0.memory0.input.address[10] top.cpu_tb.cpu_0.memory0.input.address[9] top.cpu_tb.cpu_0.memory0.input.address[8] top.cpu_tb.cpu_0.memory0.input.address[7] top.cpu_tb.cpu_0.memory0.input.address[6] top.cpu_tb.cpu_0.memory0.input.address[5] top.cpu_tb.cpu_0.memory0.input.address[4] top.cpu_tb.cpu_0.memory0.input.address[3] top.cpu_tb.cpu_0.memory0.input.address[2] top.cpu_tb.cpu_0.memory0.input.address[1] top.cpu_tb.cpu_0.memory0.input.address[0]
 @28
@@ -61,9 +85,10 @@ top.cpu_tb.cpu_0.alu0.output.done
 @22
 #{top.cpu_tb.cpu_0.alu0.alu_in.i0[7:0]} top.cpu_tb.cpu_0.alu0.alu_in.i0[7] top.cpu_tb.cpu_0.alu0.alu_in.i0[6] top.cpu_tb.cpu_0.alu0.alu_in.i0[5] top.cpu_tb.cpu_0.alu0.alu_in.i0[4] top.cpu_tb.cpu_0.alu0.alu_in.i0[3] top.cpu_tb.cpu_0.alu0.alu_in.i0[2] top.cpu_tb.cpu_0.alu0.alu_in.i0[1] top.cpu_tb.cpu_0.alu0.alu_in.i0[0]
 #{top.cpu_tb.cpu_0.alu0.alu_in.i1[7:0]} top.cpu_tb.cpu_0.alu0.alu_in.i1[7] top.cpu_tb.cpu_0.alu0.alu_in.i1[6] top.cpu_tb.cpu_0.alu0.alu_in.i1[5] top.cpu_tb.cpu_0.alu0.alu_in.i1[4] top.cpu_tb.cpu_0.alu0.alu_in.i1[3] top.cpu_tb.cpu_0.alu0.alu_in.i1[2] top.cpu_tb.cpu_0.alu0.alu_in.i1[1] top.cpu_tb.cpu_0.alu0.alu_in.i1[0]
-@23
 #{top.cpu_tb.cpu_0.alu0.alu0.output.q[7:0]} top.cpu_tb.cpu_0.alu0.alu0.output.q[7] top.cpu_tb.cpu_0.alu0.alu0.output.q[6] top.cpu_tb.cpu_0.alu0.alu0.output.q[5] top.cpu_tb.cpu_0.alu0.alu0.output.q[4] top.cpu_tb.cpu_0.alu0.alu0.output.q[3] top.cpu_tb.cpu_0.alu0.alu0.output.q[2] top.cpu_tb.cpu_0.alu0.alu0.output.q[1] top.cpu_tb.cpu_0.alu0.alu0.output.q[0]
+#{top.cpu_tb.cpu_0.alu0.alu_out.flags[7:0]} top.cpu_tb.cpu_0.alu0.alu_out.flags[7] top.cpu_tb.cpu_0.alu0.alu_out.flags[6] top.cpu_tb.cpu_0.alu0.alu_out.flags[5] top.cpu_tb.cpu_0.alu0.alu_out.flags[4] top.cpu_tb.cpu_0.alu0.alu_out.flags[3] top.cpu_tb.cpu_0.alu0.alu_out.flags[2] top.cpu_tb.cpu_0.alu0.alu_out.flags[1] top.cpu_tb.cpu_0.alu0.alu_out.flags[0]
 @28
 top.cpu_tb.cpu_0.alu0.state
+#{top.cpu_tb.cpu_0.alu0.input.mode[1:0]} top.cpu_tb.cpu_0.alu0.input.mode[1] top.cpu_tb.cpu_0.alu0.input.mode[0]
 [pattern_trace] 1
 [pattern_trace] 0

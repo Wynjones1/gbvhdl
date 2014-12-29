@@ -21,18 +21,21 @@ architecture rtl of alu_logic is
 
     type state_t is (state_idle, state_register,
                      state_indirect_0, state_indirect_1,
-                     state_immediate, state_cb_0, state_cb_1, state_store);
+                     state_immediate, state_cb_0, state_cb_reg,
+                     state_cb_store_reg, state_cb_store_indirect,
+                     state_cb_store_flags,
+                     state_cb_indirect, state_store);
 
     signal alu_in  : alu_in_if;
     signal alu_out : alu_out_if;
     signal state   : state_t;
+    signal alu_op  : alu_op_t;
 begin
     alu0 : alu port map(alu_in, alu_out);
-
-    output.reg.data <= alu_out.q & alu_out.flags;
+    alu_in.op <= alu_op;
 
     main_proc: process(clk, reset)
-    variable count : integer := 0;
+        variable out_reg : register_t;
     begin
         if reset = '1' then
             state <= state_idle;
@@ -40,10 +43,11 @@ begin
             output.mem.we <= '0';
         elsif rising_edge(clk) then
             output.reg.we <= '0';
+            output.mem.we <= '0';
             output.done   <= '0';
             case state is
                 when state_idle      =>
-                    alu_in.op    <= input.op;
+                    alu_op    <= input.op;
                     alu_in.i0    <= input.reg.a;
                     alu_in.flags <= input.reg.f;
                     if input.en = '1' then
@@ -85,29 +89,70 @@ begin
                 when state_cb_0 =>
                     case input.mem.data(7 downto 6) is
                         when "00" => -- logic
-                            alu_in.op <= l_table(input.mem.data(5 downto 3));
+                            alu_op <= l_table(input.mem.data(5 downto 3));
                         when "01" => -- bit
-                            alu_in.op <= alu_op_bit;
+                            alu_op <= alu_op_bit;
+                            alu_in.i1 <= "00000" & input.mem.data(5 downto 3);
                         when "10" => -- set
-                            alu_in.op <= alu_op_set;
+                            alu_op <= alu_op_set;
+                            alu_in.i1 <= "00000" & input.mem.data(5 downto 3);
                         when "11" => -- reset
-                            alu_in.op <= alu_op_reset;
+                            alu_op <= alu_op_reset;
+                            alu_in.i1 <= "00000" & input.mem.data(5 downto 3);
                         when others =>
-                            alu_in.op <= (others => "u");
+                            alu_op <= (others => 'U');
                     end case;
 
                     if input.mem.data(2 downto 0) = "110" then -- (HL)
+                        output.mem.address <= input.reg.hl;
+                        state <= state_cb_indirect;
                     else
+                        out_reg := r_table(input.mem.data(2 downto 0));
+                        output.reg.rsel0 <= out_reg;
+                        state <= state_cb_reg;
                     end if;
-                    alu_in.op <= l_table(input.mem.data(7 downto 6));
-                when state_cb_1 =>
-                    
+
+                when state_cb_reg      =>
+                    alu_in.i0 <= input.reg.d0(LO_BYTE);
+                    if alu_op = alu_op_bit then
+                        state <= state_cb_store_flags;
+                    else
+                        state <= state_cb_store_reg;
+                    end if;
+
+                when state_cb_store_reg =>
+                    state                    <= state_cb_store_flags;
+                    output.reg.we            <= '1';
+                    output.reg.wsel          <= out_reg;
+                    output.reg.data(LO_BYTE) <= alu_out.q;
+
+                when state_cb_indirect =>
+                    alu_in.i0 <= input.mem.data;
+                    if alu_op = alu_op_bit then
+                        state <= state_cb_store_flags;
+                    else
+                        state <= state_cb_store_indirect;
+                    end if;
+
+                when state_cb_store_indirect =>
+                    state <= state_cb_store_flags;
+                    output.mem.we      <= '1';
+                    output.mem.address <= input.reg.hl;
+                    output.mem.data    <= alu_out.q;
+
+                when state_cb_store_flags =>
+                    state <= state_idle;
+                    output.done     <= '1';
+                    output.reg.we   <= '1';
+                    output.reg.wsel <= register_f;
+                    output.reg.data(LO_BYTE) <= alu_out.flags;
 
                 when state_store =>
                     state           <= state_idle;
                     output.done     <= '1';
                     output.reg.we   <= '1';
                     output.reg.wsel <= register_af;
+                    output.reg.data <= alu_out.q & alu_out.flags;
             end case;
         end if;
     end process;
