@@ -13,7 +13,8 @@ entity memory is
 end entity;
 
 architecture rtl of memory is
-    type rom_t is array (0 to 65535) of byte_t;
+    --type rom_t is array (0 to 65535) of byte_t;
+    type rom_t is array (0 to 512) of byte_t;
 
     impure function init_mem(filename : in string) return rom_t is
         file input_file   : text open read_mode is filename;
@@ -25,7 +26,7 @@ architecture rtl of memory is
         for i in rom_t'range loop
             exit read_loop when endfile(input_file);
             readline(input_file, mif_line);
-            read(mif_line, temp_bv);
+--            read(mif_line, temp_bv);
             for j in 0 to 7 loop
                 --rom(i) := to_stdlogicvector(temp_bv);
                 if temp_bv(j) = '1' then
