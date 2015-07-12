@@ -43,6 +43,11 @@ architecture rtl of cpu is
     type state_t is (state_load_instr, state_decode_instr,
                      state_execute_instr, state_wait_for_load,
                      state_rel_jump, state_call_0, state_call_1,
+                     state_dec_double_0, state_dec_double_1,
+                     state_inc_double_0, state_inc_double_1,
+                     state_ret_0, state_ret_1, state_ret_2,
+                     state_push_0, state_push_1, state_push_2,
+                     state_pop_0, state_pop_1, state_pop_2, state_pop_3,
                      state_call_2, state_call_3, state_call_4,
                      state_wait_for_alu, state_increment_pc);
     signal state : state_t;
@@ -81,6 +86,9 @@ architecture rtl of cpu is
     signal alu_en       : std_logic := '0';
     signal instr_size   : integer range 1 to 3;
 
+    signal qq_temp : register_t; -- TODO: Clean up this.
+    signal reg_temp : word_t;
+
 begin
     memory0 : memory     port map(clk, reset, mem_in_mux, mem_out);
     reg0    : registers  port map(clk, reset, reg_in_mux, reg_out);
@@ -117,12 +125,11 @@ begin
         if reset = '1' then
             state     <= state_load_instr;
             alu_in.en <= '0';
-            mem_in    <= (we => '0', others => (others => '0'));
-            reg_in    <= (we => '0', others => (others => '0'));
+            mem_in.we <= '0'; --   <= (we => '0', others => (others => '0'));
+            reg_in.we <= '0'; --   <= (we => '0', others => (others => '0'));
         elsif rising_edge(clk) then
             reg_in.we  <= '0';
             mem_in.we  <= '0';
-            instr_size <= 1;
             case state is
                 when state_load_instr    =>
                     mem_in.address <= reg_out.pc;
@@ -130,17 +137,39 @@ begin
                 when state_decode_instr  =>
                     --report instr_string severity note;
                     instr_string <= instruction_to_string(mem_out.data);
-                    state       <= state_execute_instr;
-                    reg_in.wsel <= register_pc;
+                    state        <= state_execute_instr;
+                    instr_size   <= 1;
+                    reg_in.wsel  <= register_pc;
                     if    std_match(mem_out.data, "00000000") then  -- NOP   
                         reg_in.we   <= '1';
                         reg_in.data <= std_logic_vector(unsigned(reg_out.pc) + 1);
                         state       <= state_increment_pc;
                     elsif std_match(mem_out.data, "00000111") then  -- RLCA  
+                        state <= state_wait_for_alu;
+                        alu_in.en   <= '1';
+                        alu_en      <= '1';
+                        alu_in.mode <= "00";
+                        alu_in.op   <= alu_op_rlc;
+                        alu_in.rsel <= register_a;
                     elsif std_match(mem_out.data, "00001111") then  -- RRCA  
+                        state <= state_wait_for_alu;
+                        alu_in.en   <= '1';
+                        alu_en      <= '1';
+                        alu_in.mode <= "00";
+                        alu_in.op   <= alu_op_rrc;
+                        alu_in.rsel <= register_a;
                     elsif std_match(mem_out.data, "00010000") then  -- STOP  
                     elsif std_match(mem_out.data, "00010111") then  -- RLA   
+                        state <= state_wait_for_alu;
+                        alu_in.en   <= '1';
+                        alu_en      <= '1';
+                        alu_in.mode <= "00";
+                        alu_in.op   <= alu_op_rl;
+                        alu_in.rsel <= register_a;
                     elsif std_match(mem_out.data, "00011000") then  -- JR   r8 
+                        instr_size <= 2;
+                        state <= state_rel_jump;
+                        mem_in.address <= std_logic_vector(unsigned(reg_out.pc) + 1);
                     elsif std_match(mem_out.data, "00011111") then  -- RRA   
                     elsif std_match(mem_out.data, "00100111") then  -- DDA   
                     elsif std_match(mem_out.data, "00101111") then  -- CPL   
@@ -155,11 +184,15 @@ begin
                     elsif std_match(mem_out.data, "00111111") then  -- CCF   
                     elsif std_match(mem_out.data, "11000011") then  -- JP   d16 
                     elsif std_match(mem_out.data, "11001001") then  -- RET   
+                        state <= state_ret_0;
+                        mem_in.address <= reg_out.sp;
+
                     elsif std_match(mem_out.data, "11001011") then  -- CB
                         state <= state_wait_for_alu;
                         alu_in.en   <= '1';
                         alu_en      <= '1';
                         alu_in.mode <= "11";
+                        alu_in.op   <= alu_op_cb;
                         instr_size  <= 2;
                     elsif std_match(mem_out.data, "11001101") then  -- CALL d16 
                         state <= state_call_0;
@@ -360,13 +393,17 @@ begin
                         load_in.inc_dec  <= "00";
 
                     elsif std_match(mem_out.data, "001--000") then  -- JR   cc r8
-                        state      <= state_increment_pc;
                         instr_size <= 2;
-                        reg_in.we  <= '1';
                         if need_to_jump(mem_out.data(4 downto 3), reg_out.f(7 downto 4)) then
                                 state <= state_rel_jump;
                                 mem_in.address <= std_logic_vector(unsigned(reg_out.pc) + 1);
+                        else
+                            reg_in.we   <= '1';
+                            reg_in.wsel <= register_pc;
+                            reg_in.data <= std_logic_vector(unsigned(reg_out.pc) + 2);
+                            state       <= state_increment_pc;
                         end if;
+
                     elsif std_match(mem_out.data, "110--000") then  -- RET  cc 
                     elsif std_match(mem_out.data, "110--010") then  -- JP   cc d16
                     elsif std_match(mem_out.data, "110--100") then  -- CALL cc d16
@@ -381,10 +418,23 @@ begin
                         instr_size       <= 3;
 
                     elsif std_match(mem_out.data, "00--0011") then  -- INC  ss 
+                        state <= state_inc_double_0;
+                        reg_in.rsel0 <= ss;
+
                     elsif std_match(mem_out.data, "00--1001") then  -- ADD  HL ss
                     elsif std_match(mem_out.data, "00--1011") then  -- DEC  ss 
+                        state <= state_dec_double_0;
+                        reg_in.rsel0 <= ss;
+
                     elsif std_match(mem_out.data, "11--0001") then  -- POP  qq 
+                        state <= state_pop_0;
+                        mem_in.address <= reg_out.sp;
+                        qq_temp <= qq;
+
                     elsif std_match(mem_out.data, "11--0101") then  -- PUSH qq 
+                        state <= state_push_0;
+                        reg_in.rsel0 <= qq;
+
                     elsif std_match(mem_out.data, "00---100") then  -- INC  r 
                         state <= state_wait_for_alu;
                         alu_in.en   <= '1';
@@ -520,11 +570,97 @@ begin
                     mem_in.address <= std_logic_vector(unsigned(reg_out.pc) + 2);
 
                 when state_call_4 =>
-                    state              <= state_load_instr;
+                    state              <= state_increment_pc;
                     temp_addr(HI_BYTE) := mem_out.data;
                     reg_in.we          <= '1';
                     reg_in.wsel        <= register_pc;
                     reg_in.data        <= temp_addr;
+
+                when state_push_0 =>
+                    state <= state_push_1;
+                    mem_in.we      <= '1';
+                    mem_in.address <= std_logic_vector(unsigned(reg_out.sp) - 1);
+                    mem_in.data    <= reg_out.d0(HI_BYTE);
+
+                when state_push_1 =>
+                    state <= state_push_2;
+                    temp_addr      := std_logic_vector(unsigned(reg_out.sp) - 2);
+                    mem_in.we      <= '1';
+                    mem_in.address <= temp_addr;
+                    mem_in.data    <= reg_out.d0(LO_BYTE);
+                    reg_in.we      <= '1';
+                    reg_in.wsel    <= register_sp;
+                    reg_in.data    <= temp_addr;
+
+                when state_push_2 =>
+                    state <= state_increment_pc;
+                    reg_in.we          <= '1';
+                    reg_in.wsel        <= register_pc;
+                    reg_in.data        <= std_logic_vector(unsigned(reg_out.pc) + 1);
+
+                when state_pop_0 =>
+                    state <= state_pop_1;
+                    mem_in.address <= std_logic_vector(unsigned(reg_out.sp) + 1);
+                    reg_temp(LO_BYTE) <= mem_out.data;
+
+                when state_pop_1 =>
+                    state       <= state_pop_2;
+                    reg_in.we   <= '1';
+                    reg_in.wsel <= qq_temp;
+                    reg_in.data <= mem_out.data & reg_temp(LO_BYTE);
+
+                when state_pop_2 =>
+                    state       <= state_pop_3;
+                    reg_in.we   <= '1';
+                    reg_in.wsel <= register_sp;
+                    reg_in.data <= std_logic_vector(unsigned(reg_out.sp) + 2);
+
+                when state_pop_3 =>
+                    state <= state_increment_pc;
+                    reg_in.we <= '1';
+                    reg_in.wsel <= register_pc;
+                    reg_in.data <= std_logic_vector(unsigned(reg_out.pc) + 1);
+
+                when state_inc_double_0 =>
+                    state <= state_inc_double_1;
+                    reg_in.we   <= '1';
+                    reg_in.wsel <= ss;
+                    reg_in.data <= std_logic_vector(unsigned(reg_out.d0) + 1);
+
+                when state_inc_double_1 =>
+                    state <= state_increment_pc;
+                    reg_in.we   <= '1';
+                    reg_in.wsel <= register_pc;
+                    reg_in.data <= std_logic_vector(unsigned(reg_out.pc) + 1);
+
+                when state_dec_double_0 =>
+                    state <= state_dec_double_1;
+                    reg_in.we   <= '1';
+                    reg_in.wsel <= ss;
+                    reg_in.data <= std_logic_vector(unsigned(reg_out.d0) - 1);
+
+                when state_dec_double_1 =>
+                    state <= state_increment_pc;
+                    reg_in.we   <= '1';
+                    reg_in.wsel <= register_pc;
+                    reg_in.data <= std_logic_vector(unsigned(reg_out.pc) + 1);
+
+                when state_ret_0 =>
+                    state <= state_ret_1;
+                    reg_temp(LO_BYTE) <= mem_out.data;
+                    mem_in.address    <= std_logic_vector(unsigned(reg_out.sp) + 1);
+
+                when state_ret_1 =>
+                    state <= state_ret_2;
+                    reg_in.we   <= '1';
+                    reg_in.wsel <= register_pc;
+                    reg_in.data <= mem_out.data & reg_temp(LO_BYTE);
+
+                when state_ret_2 =>
+                    state <= state_increment_pc;
+                    reg_in.we <= '1';
+                    reg_in.wsel <= register_sp;
+                    reg_in.data <= std_logic_vector(unsigned(reg_out.sp) + 2);
 
                 when state_increment_pc =>
                     state <= state_load_instr;

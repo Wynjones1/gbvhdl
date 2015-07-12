@@ -1,6 +1,8 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+use std.textio.all;
+use work.common.all;
 use work.types.all;
 use work.interfaces.all;
 
@@ -20,13 +22,19 @@ architecture rtl of registers is
     signal pc : word_t;
 begin
     write: process(clk, reset)
+        constant filename : string := "/home/stuart/VHDL/gbvhdl/bin/registers_init.mif";
+        file input_file   : text is in filename;
+        variable run : boolean := true;
     begin
         if reset = '1' then
-            af <= (others => '0');
-            bc <= (others => '0');
-            de <= (others => '0');
-            hl <= (others => '0');
-            sp <= (others => '0');
+            if run then
+                af <= read_slv(input_file);
+                bc <= read_slv(input_file);
+                de <= read_slv(input_file);
+                hl <= read_slv(input_file);
+                sp <= read_slv(input_file);
+                run := false;
+            end if;
             pc <= (others => '0');
         elsif rising_edge(clk) then
             if input.we = '1' then
@@ -51,7 +59,7 @@ begin
         end if;
     end process;
 
-    output_proc : process(input)
+    output_proc : process(af, bc, de, hl, sp, pc, input.rsel0, input.rsel1)
     begin
         output.d0 <= (others => '0');
         output.d1 <= (others => '0');

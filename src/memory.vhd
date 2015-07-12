@@ -13,8 +13,7 @@ entity memory is
 end entity;
 
 architecture rtl of memory is
---    type rom_t is array (0 to 65534) of byte_t;
-    type rom_t is array (0 to 1024) of byte_t;
+    type rom_t is array (0 to (2 ** 16 - 1)) of byte_t;
 
     impure function init_mem(filename : in string) return rom_t is
         file input_file   : text open read_mode is filename;
@@ -22,6 +21,7 @@ architecture rtl of memory is
         variable temp_bv  : bit_vector(7 downto 0);
         variable rom      : rom_t;
     begin
+        rom := (others => (others => '1'));
         read_loop:
         for i in rom_t'range loop
             exit read_loop when endfile(input_file);
@@ -38,8 +38,8 @@ architecture rtl of memory is
         return rom;
     end function;
 
-    signal rom   : rom_t := init_mem("../bin/DMG_ROM.mif");
-    signal index : integer range 0 to 1024;
+    signal rom   : rom_t := init_mem("/home/stuart/VHDL/gbvhdl/bin/DMG_ROM.mif");
+    signal index : integer range 0 to (2 ** 16 - 1);
 begin
 
     process(clk, reset)
@@ -55,16 +55,12 @@ begin
         end if;
     end process;
 
-    process(input.address)
+    process(reset, input.address)
     begin
         if reset = '1' then
             index <= 0;
         else
-            if unsigned(input.address) > 1023 then
-                index <= 1024;
-            else
-                index <= to_integer(unsigned(input.address));
-            end if;
+            index <= to_integer(unsigned(input.address));
         end if;
     end process;
 

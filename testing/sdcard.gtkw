@@ -1,0 +1,45 @@
+[*]
+[*] GTKWave Analyzer v3.3.58 (w)1999-2014 BSI
+[*] Sun Jan 18 15:03:02 2015
+[*]
+[dumpfile] "/home/stuart/VHDL/gbvhdl/testing/waves.ghw"
+[dumpfile_mtime] "Sun Jan 18 14:54:05 2015"
+[dumpfile_size] 20944436
+[savefile] "/home/stuart/VHDL/gbvhdl/testing/sdcard.gtkw"
+[timestart] 0
+[size] 1920 1053
+[pos] -1 -27
+*-41.443474 4410000000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.sdcard_tb.
+[treeopen] top.sdcard_tb.top0.
+[treeopen] top.sdcard_tb.top0.ssd1.
+[treeopen] top.sdcard_tb.top0.vga0.
+[sst_width] 196
+[signals_width] 118
+[sst_expanded] 1
+[sst_vpaned_height] 658
+@28
+top.sdcard_tb.top0.clk
+top.sdcard_tb.top0.clk_1khz
+top.sdcard_tb.top0.clk_200hz
+top.sdcard_tb.top0.clk_1hz
+top.sdcard_tb.top0.miso
+top.sdcard_tb.top0.mosi
+top.sdcard_tb.top0.sck
+top.sdcard_tb.top0.ss
+@22
+#{top.sdcard_tb.top0.ssd1.input[15:0]} top.sdcard_tb.top0.ssd1.input[15] top.sdcard_tb.top0.ssd1.input[14] top.sdcard_tb.top0.ssd1.input[13] top.sdcard_tb.top0.ssd1.input[12] top.sdcard_tb.top0.ssd1.input[11] top.sdcard_tb.top0.ssd1.input[10] top.sdcard_tb.top0.ssd1.input[9] top.sdcard_tb.top0.ssd1.input[8] top.sdcard_tb.top0.ssd1.input[7] top.sdcard_tb.top0.ssd1.input[6] top.sdcard_tb.top0.ssd1.input[5] top.sdcard_tb.top0.ssd1.input[4] top.sdcard_tb.top0.ssd1.input[3] top.sdcard_tb.top0.ssd1.input[2] top.sdcard_tb.top0.ssd1.input[1] top.sdcard_tb.top0.ssd1.input[0]
+@28
+top.sdcard_tb.vs
+top.sdcard_tb.hs
+top.sdcard_tb.top0.vga_en
+top.sdcard_tb.top0.pix_y
+top.sdcard_tb.top0.pix_x
+top.sdcard_tb.top0.vga0.vs_counter.sync
+top.sdcard_tb.top0.vga0.hs_counter.sync
+top.sdcard_tb.vs
+@29
+top.sdcard_tb.hs
+[pattern_trace] 1
+[pattern_trace] 0

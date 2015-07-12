@@ -15,15 +15,6 @@ architecture rtl of cpu_tb is
 
     signal clk        : std_logic := '0';
     signal reset      : std_logic := '1';
-
-    type temp_rcd is
-        record
-            a : std_logic;
-            b : std_logic;
-            c : std_logic;
-        end record;
-
-    signal a : temp_rcd;
 begin
     reset_gen : process
     begin

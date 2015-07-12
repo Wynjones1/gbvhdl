@@ -1,5 +1,6 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
+use std.textio.all;
 use work.types.all;
 
 package common is
@@ -12,6 +13,8 @@ package common is
     function l_table(input : std_logic_vector(2 downto 0)) return alu_op_t;
 
     function need_to_jump(cc : std_logic_vector(1 downto 0); flags : std_logic_vector(7 downto 4)) return boolean;
+
+    function read_slv(file fp : text) return std_logic_vector;
 end;
 
 -- TODO: Maybe add report for invalid values.
@@ -96,5 +99,25 @@ package body common is
                ((cc = "01") and (flags(ZERO_BIT)  = '1')) or   --  Z
                ((cc = "10") and (flags(CARRY_BIT) = '0')) or   -- NC
                ((cc = "11") and (flags(CARRY_BIT) = '1'));     --  C
+    end function;
+
+    function read_slv(file fp : text) return std_logic_vector is
+        variable bv  : bit_vector(15 downto 0);
+        variable slv : std_logic_vector(15 downto 0);
+        variable li  : line;
+    begin
+        if endfile(fp) then
+            return "UUUUUUUUUUUUUUUU";
+        end if;
+        readline(fp, li);
+        read(li, bv);
+        for i in 0 to 15 loop
+            if bv(i) = '1' then
+                slv(i) := '1';
+            else
+                slv(i) := '0';
+            end if;
+        end loop;
+        return slv;
     end function;
 end common;

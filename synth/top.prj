@@ -1,0 +1,6 @@
+../src/types.vhd
+../src/interfaces.vhd
+./ssd.vhd
+./clock_gen.vhd
+./vga.vhd
+./top.vhd

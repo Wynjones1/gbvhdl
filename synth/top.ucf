@@ -1,0 +1,44 @@
+NET CLK            LOC = "B8";
+NET reset          LOC = "B18";
+
+NET ss       LOC = "L15"; #"JA1" 
+NET mosi     LOC = "K12"; #"JA2" 
+NET miso     LOC = "L17"; #"JA3" 
+NET sck      LOC = "M15"; #"JA4" 
+NET sddat<0> LOC = "K13"; #"JA7"
+NET sddat<1> LOC = "L16"; #"JA8"
+NET cd       LOC = "M14"; #"JA9"
+NET wp       LOC = "M16"; #"JA10"
+
+NET LED<0>   LOC = "J14";
+NET LED<1>   LOC = "J15";
+NET LED<2>   LOC = "K15";
+NET LED<3>   LOC = "K14";
+NET LED<4>   LOC = "E17";
+NET LED<5>   LOC = "P15";
+NET LED<6>   LOC = "F4";
+NET LED<7>   LOC = "R4";
+
+NET DISP<0>  LOC = "L18";
+NET DISP<1>  LOC = "F18";
+NET DISP<2>  LOC = "D17";
+NET DISP<3>  LOC = "D16";
+NET DISP<4>  LOC = "G14";
+NET DISP<5>  LOC = "J17";
+NET DISP<6>  LOC = "H14";
+NET DP       LOC = "C17";
+NET AN<0>    LOC = "F17";
+NET AN<1>    LOC = "H17";
+NET AN<2>    LOC = "C18";
+NET AN<3>    LOC = "F15";
+
+NET colour<0> LOC = "R9";
+NET colour<1> LOC = "T8";
+NET colour<2> LOC = "R8";
+NET colour<3> LOC = "N8";
+NET colour<4> LOC = "P8";
+NET colour<5> LOC = "P6";
+NET colour<6> LOC = "U5";
+NET colour<7> LOC = "U4";
+NET HS        LOC = "T4";
+NET VS        LOC = "U3";

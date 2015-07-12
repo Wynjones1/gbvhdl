@@ -1,14 +1,14 @@
 SRCDIR       := ../src
-SRC          := $(SRCDIR)/types.vhd $(SRCDIR)/interfaces.vhd $(SRCDIR)/common.vhd $(shell find $(SRCDIR) -type f -name "*.vhd")
+SRC          := ../synth/vga.vhd ../synth/ssd.vhd ../synth/clock_gen.vhd ../synth/top.vhd $(SRCDIR)/types.vhd $(SRCDIR)/interfaces.vhd $(SRCDIR)/common.vhd $(shell find $(SRCDIR) -type f -name "*.vhd")
 OUT          := $(patsubst  %.vhd,%.o,$(SRC))
 FILE         := memory_tb
 FILE         := alu_tb
 FILE         := registers_tb
 FILE         := cpu_tb
+FILE         := sdcard_tb
 WAVE         := --vcd=waves.vcd
 WAVE         := --wave=waves.ghw
 #TIME         := --stop-time=2000ns;
-TIME         := --stop-time=1ms;
 GHDL_FLAGS   := --ieee=synopsys
 ASSERT_LEVEL := warning
 ASSERT_LEVEL := failure

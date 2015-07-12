@@ -224,6 +224,9 @@ def output_conversion(m):
     for i,e in enumerate(m):
         fp.write('elsif %s = x"%s" then return "%s";\n' % (var, hex(i)[2:], string.ljust(e,15).replace(" ", ".")))
 
+def output_strings(m, n):
+    print(m)
+
 def main():
     fp = open("all_ops.csv", "r")
     t = [0] * 256;
@@ -243,6 +246,8 @@ def main():
         else:
             b = n
 
+    output_strings(m, n)
+    return
     output_html(m, n)
     output_conversion(m)
     for i in downto_sort:

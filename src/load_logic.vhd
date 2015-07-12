@@ -13,14 +13,15 @@ end entity;
 
 architecture rtl of load_logic is
     type state_t is (load_idle, load_n_0, load_nn_0, load_r_0, load_indirect, load_have_b, load_n_1, load_nn_1, load_r_1, load_have_a);
-    signal state : state_t;
-    signal d16   : word_t; -- write data
-    signal a16   : word_t; -- write address
+    signal state : state_t := load_idle;
+    signal a16   : word_t  := (others => '0'); -- write address
 begin
     main: process(clk)
+        variable d16   : word_t; -- write data
     begin
         if reset = '1' then
             output.mem.address <= (others => '0');
+            state <= load_idle;
         elsif rising_edge(clk) then
             output.mem.we <= '0';
             output.reg.we <= '0';
@@ -40,7 +41,7 @@ begin
                     end if;
 
                 when load_n_0 =>
-                    d16(LO_BYTE) <= input.mem.data;
+                    d16(LO_BYTE) := input.mem.data;
                     if input.r1 = register_d16 then
                         state <= load_nn_0;
                         output.mem.address <= std_logic_vector(unsigned(input.reg.pc) + 2);
@@ -52,10 +53,10 @@ begin
                     end if;
 
                 when load_nn_0 =>
-                    d16(HI_BYTE) <= input.mem.data;
+                    d16(HI_BYTE) := input.mem.data;
                     if input.indirect = "10" then
                         state <= load_indirect;
-                        output.mem.address <= input.mem.data & d16(LO_BYTE);
+                        output.mem.address <= d16;
                     else
                         state <= load_have_b;
                     end if;
@@ -70,12 +71,12 @@ begin
                         end if;
                     else
                         state <= load_have_b;
-                        d16   <= input.reg.d0;
+                        d16   := input.reg.d0;
                     end if;
 
                 when load_indirect =>
                     state <= load_have_b;
-                    d16(LO_BYTE) <= input.mem.data;
+                    d16(LO_BYTE) := input.mem.data;
 
                 when load_have_b =>
                     if input.r0 = register_d8 or input.r0 = register_d16 then

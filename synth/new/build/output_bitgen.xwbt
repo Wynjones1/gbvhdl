@@ -1,0 +1,7 @@
+INFILE=/home/stuart/VHDL/gbvhdl/synth/new/build/parout.ncd
+OUTFILE=/home/stuart/VHDL/gbvhdl/synth/new/build/output.bit
+FAMILY=Spartan3E
+PART=xc3s500e-5fg320
+WORKINGDIR=/home/stuart/VHDL/gbvhdl/synth/new/build
+LICENSE=WebPack
+USER_INFO=210925346_0_0_545

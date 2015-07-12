@@ -86,4 +86,16 @@ package interfaces is
             mem  : memory_in_if;
             done : std_logic;
         end record;
+
+    type sdcard_hw_out_if is
+        record
+            ss   : std_logic; -- slave  select
+            miso : std_logic; -- master in slave out
+            sck  : std_logic; -- serial clk
+        end record;
+    type sdcard_hw_in_if is
+        record
+            mosi : std_logic; -- master out slave in
+        end record;
+
 end;
